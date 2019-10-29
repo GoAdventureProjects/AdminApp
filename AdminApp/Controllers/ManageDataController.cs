@@ -1,47 +1,35 @@
-﻿using System;
+﻿using AdminApp.DAL;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AdminApp.DAL;
-using Newtonsoft.Json;
 
 namespace AdminApp.Controllers
 {
-    public class HomeController : Controller
+   // [RoutePrefix("ManageData")]
+    public class ManageDataController : Controller
     {
         private DBMethods dbStore;
-        public HomeController()
+
+      
+        public ManageDataController()
         {
             dbStore = new DBMethods();
         }
 
+        // GET: ManageData
         public ActionResult Index()
         {
-            
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        //[Route("eventdetails")]
-        public string GetEventDetails()
+        public string GetAllEvents()
         {
             try
             {
-                var result = dbStore.GetEventsByDate(DateTime.Now);
+                var result = dbStore.GetAllLuEvents();
                 if (result != null)
                     return JsonConvert.SerializeObject(result);
             }
@@ -52,11 +40,12 @@ namespace AdminApp.Controllers
             return null;
         }
 
-        public string GetExpenseTypes()
+        //[Route("eventTypes")]
+        public string GetEventTypes()
         {
             try
             {
-                var result = dbStore.GetLuExpenseTypes();
+                var result = dbStore.GetEventTypes();
                 if (result != null)
                     return JsonConvert.SerializeObject(result);
             }
@@ -66,5 +55,11 @@ namespace AdminApp.Controllers
             }
             return null;
         }
+
+        //public PartialViewResult StayPartial(int eventId)
+        //{
+        //    return PartialView("_Stay");
+        //}
+    
     }
 }

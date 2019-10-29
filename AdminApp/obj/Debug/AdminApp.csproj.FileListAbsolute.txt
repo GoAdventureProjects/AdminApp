@@ -69,3 +69,5 @@ D:\Rajashekar.T\GoAdventure\AdminApp\AdminApp\obj\Debug\AdminApp.csproj.CoreComp
 D:\Rajashekar.T\GoAdventure\AdminApp\AdminApp\obj\Debug\AdminApp.csproj.CopyComplete
 D:\Rajashekar.T\GoAdventure\AdminApp\AdminApp\obj\Debug\AdminApp.dll
 D:\Rajashekar.T\GoAdventure\AdminApp\AdminApp\obj\Debug\AdminApp.pdb
+D:\Rajashekar.T\GoAdventure\AdminApp\AdminApp\bin\App.DAL.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\AdminApp\bin\App.DAL.pdb

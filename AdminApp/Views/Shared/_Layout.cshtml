@@ -8,12 +8,18 @@
     @Scripts.Render("~/bundles/modernizr")
 
 
+    <!-- Theme -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/Theme/css/fontastic.css" rel="stylesheet" />
-    <link href="~/Content/Theme/css/style.default.css" rel="stylesheet"  id="theme-stylesheet"/>
+    <link href="~/Content/Theme/css/style.default.css" rel="stylesheet" id="theme-stylesheet" />
     <link href="~/Content/Theme/css/custom.css" rel="stylesheet" />
 
-    @*<link href="~/Content/Theme/css/style.violet.css" rel="stylesheet" />*@
+    <!-- vuejs-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js" ></script>
+    
+    <!-- momentjs -->
+    <script src="~/Scripts/moment.min.js"></script>
+
 </head>
 <body>
     @Scripts.Render("~/bundles/jquery")
@@ -88,7 +94,7 @@
                                 <ul aria-labelledby="notifications" class="dropdown-menu">
                                     <li>
                                         <a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                            <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                            <div class="msg-profile"> <img src="" alt="..." class="img-fluid rounded-circle"></div>
                                             <div class="msg-body">
                                                 <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
                                             </div>
@@ -96,7 +102,7 @@
                                     </li>
                                     <li>
                                         <a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                            <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                            <div class="msg-profile"> <img src="~/Assets/Images/goadventure-log.png" alt="logo" class="img-fluid rounded-circle"></div>
                                             <div class="msg-body">
                                                 <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
                                             </div>
@@ -135,27 +141,28 @@
             <nav class="side-navbar">
                 <!-- Sidebar Header-->
                 <div class="sidebar-header d-flex align-items-center">
-                    <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                    <div class="avatar"><img src="~/Assets/Images/goadventure-log.png" alt="..." class="img-fluid rounded-circle"></div>
                     <div class="title">
-                        <h1 class="h4">Mark Stephen</h1>
-                        <p>Web Designer</p>
+                        <h1 class="h4">Go Adventure</h1>
+                        <p>Admin</p>
                     </div>
                 </div>
-                <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+                <!-- Sidebar Navidation Menus-->
+                @*<span class="heading">Main</span>*@
                 <ul class="list-unstyled">
                     <li class="active"><a href="index.html"> <i class="icon-home"></i>Home </a></li>
                     <li><a href="tables.html"> <i class="icon-grid"></i>Tables </a></li>
                     <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
                     <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
-                    <li>
+                    @*<li>
                         <a href="#menu_managedata" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Manage Data</a>
                         <ul id="menu_managedata" class="collapse list-unstyled ">
-                            <li><a href="#">Stay</a></li>
+                            <li><a href="/ManageData/Stay">Stay</a></li>
                             <li><a href="#">Trasport</a></li>
                             <li><a href="#">Guide</a></li>
                         </ul>
-                    </li>
-                    <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
+                    </li>*@
+                    <li><a href="/ManageData"> <i class="icon-interface-windows"></i>Manage Data</a></li>
                 </ul><span class="heading">Extras</span>
                 <ul class="list-unstyled">
                     <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
@@ -167,91 +174,31 @@
             <div class="content-inner">
                 <!-- Page Header-->
                 <header class="page-header">
-                    <div class="container-fluid">
-                        <h2 class="no-margin-bottom">Dashboard</h2>
-                    </div>
+                  @RenderSection("page_header")
                 </header>
-                <!-- Dashboard Counts Section-->
-                <section class="dashboard-counts no-padding-bottom">
-                    <div class="container-fluid">
-                        <div class="row bg-white has-shadow">
-                            <!-- Item -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-violet"><i class="icon-user"></i></div>
-                                    <div class="title">
-                                        <span>New<br>Clients</span>
-                                        <div class="progress">
-                                            <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
-                                        </div>
-                                    </div>
-                                    <div class="number"><strong>25</strong></div>
-                                </div>
+
+                    <!-- Dashboard Header Section    -->
+                    <section class="dashboard-header">
+                        <div class="container-fluid">
+                            <div class="row">
+                                @RenderBody()
                             </div>
-                            <!-- Item -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-red"><i class="icon-padnote"></i></div>
-                                    <div class="title">
-                                        <span>Work<br>Orders</span>
-                                        <div class="progress">
-                                            <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
-                                        </div>
-                                    </div>
-                                    <div class="number"><strong>70</strong></div>
+                        </div>
+                    </section>
+                    <!-- Page Footer-->
+                    <footer class="main-footer">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>All rights reserved to &copy; GoAdventure @DateTime.Now.Year</p>
                                 </div>
-                            </div>
-                            <!-- Item -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-green"><i class="icon-bill"></i></div>
-                                    <div class="title">
-                                        <span>New<br>Invoices</span>
-                                        <div class="progress">
-                                            <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
-                                        </div>
-                                    </div>
-                                    <div class="number"><strong>40</strong></div>
-                                </div>
-                            </div>
-                            <!-- Item -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="item d-flex align-items-center">
-                                    <div class="icon bg-orange"><i class="icon-check"></i></div>
-                                    <div class="title">
-                                        <span>Open<br>Cases</span>
-                                        <div class="progress">
-                                            <div role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-orange"></div>
-                                        </div>
-                                    </div>
-                                    <div class="number"><strong>50</strong></div>
+                                <div class="col-sm-6 text-right">
+                                    <p>Design by <a href="https://bootstrapious.com/p/admin-template" class="external">Bootstrapious</a></p>
+                                    <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-                <!-- Dashboard Header Section    -->
-                <section class="dashboard-header">
-                    <div class="container-fluid">
-                        <div class="row">
-                            @RenderBody()
-                        </div>
-                    </div>
-                </section>
-                <!-- Page Footer-->
-                <footer class="main-footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p>All rights reserved to &copy; GoAdventure @DateTime.Now.Year</p>
-                            </div>
-                            <div class="col-sm-6 text-right">
-                                <p>Design by <a href="https://bootstrapious.com/p/admin-template" class="external">Bootstrapious</a></p>
-                                <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                    </footer>
             </div>
         </div>
     </div>
@@ -264,6 +211,15 @@
         </footer>
     </div>*@
 
+    <script type="text/javascript">
+        //this lookup data required in most of the pages
+        fetch("/home/GetExpenseTypes")
+            .then(response => response.json())
+            .then(jsondata => {
+                debugger;
+                window._EventExpenseType = jsondata;
+            })
+    </script>
 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

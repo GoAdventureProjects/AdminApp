@@ -1,0 +1,4 @@
+﻿//this contains the list of DB entitiese Sps,tables,etc.. created by me
+{
+  "StoredProcs": [ "GoAdmin_GetEventsByDate" ]
+}

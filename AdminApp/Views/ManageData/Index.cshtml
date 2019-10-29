@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "Stay";
+}
+
+<style type="text/css">
+    .card {
+        width: 100%;
+    }
+</style>
+
+<!-- bootstrap select -->
+<link href="~/Content/plugins/bootstrap_select/bootstrap-select.min.css" rel="stylesheet" />
+<script src="~/Content/plugins/bootstrap_select/bootstrap-select.min.js"></script>
+<script src="~/Scripts/popper.min.js"></script>
+
+<!-- vue -->
+@*<script src="https://unpkg.com/http-vue-loader"></script>*@
+
+
+@section page_header{
+    <div class="container-fluid">
+        <h2 class="no-margin-bottom">Manage Data</h2>
+    </div>
+}
+
+<div class="container-fluid" id="maindiv">
+    <div class="row">
+
+        <!-- selection -->
+        <div class="card">
+
+            <div class="card-body">
+                <div class="form-group row">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select id="ddlEventType" class="form-control mb-3" v-on:change="onEventTypeChange($event)">
+                                <option>Select Event Type</option>
+                                <option v-for="i in eventDetails.eventTypes"> {{ i }} </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <select name="account" id="ddlEvents" class="form-control show-tick" data-live-search="true" data-size="15" v-on:change="onEventChange($event)">
+                                <option>Select Event</option>
+                                <option v-for="event in eventDetails.currentEventData" v-bind:value="event['EventDetailsId']"> {{ event["EventTitle"] }} </option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <app-world></app-world>
+
+        <!-- manage stay -->
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Manage-Stay</h3>
+            </div>
+            <div class="card-body">
+
+                <!-- add new stay-->
+                <div class="row">
+                    <div class="form-group">
+                        <label for="inlineFormInput" class="sr-only">Name</label>
+                        <input id="inlineFormInput" type="text" placeholder="Jane Doe" class="mr-3 form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="inlineFormInputGroup" class="sr-only">Username</label>
+                        <input id="inlineFormInputGroup" type="text" placeholder="Username" class="mr-3 form-control">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- manage transportation -->
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Manage-Transportation</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- manage Guide -->
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Manage-Guide</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    //initialize bootstrap-select dropdown
+    $(function () {
+      // $("#ddlEvents").selectpicker();
+
+
+        var app = new Vue({
+            el: "#maindiv",
+            components: {
+                //'app-world': window.httpVueLoader('components/HelloWorld.vue')
+            },
+            data: {
+                eventDetails: {
+                    originalData: [],
+                    eventTypes:[],
+                    currentEventData:[]
+                },
+                expenseType: {
+                    stay: [],
+                    transport: [],
+                    guide: []
+                }
+            },
+            mounted: function () {
+                //fill event type dropdown
+                fetch("/ManageData/GetAllEvents")
+                    .then(result => result.json())
+                    .then(jsondata => {
+                        this.eventDetails.originalData = jsondata;
+                        this.eventDetails.eventTypes = jsondata.map(x => x.EventType).filter((x, i, arr) => arr.indexOf(x) == i).filter(x => x != null); //filter unique 
+                    });
+
+            },
+            methods: {
+                onEventTypeChange: function (el) {
+                    var eventType = el.target.value;
+                    this.eventDetails.currentEventData = this.eventDetails.originalData.filter(x => x.EventType == eventType);
+                },
+                onEventChange: function (el) {
+                    var event = el.target.value;
+                    this.expenseType.stay=
+                }
+            }
+        });
+
+
+
+    })
+</script>

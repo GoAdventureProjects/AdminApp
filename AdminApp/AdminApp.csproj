@@ -148,17 +148,28 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageDataController.cs" />
+    <Compile Include="DAL\DBMethods.cs" />
+    <Compile Include="DAL\Utils.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventDetails.cs" />
+    <Compile Include="Models\EventExpensesEstimate.cs" />
+    <Compile Include="Models\LuEventExpenseType.cs" />
+    <Compile Include="Models\LuEvents.cs" />
+    <Compile Include="Models\LuEventType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\goadventure-log.png" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\plugins\bootstrap_select\bootstrap-select.min.css" />
+    <Content Include="Content\plugins\bootstrap_select\bootstrap-select.min.js" />
     <Content Include="Content\Theme\css\custom.css" />
     <Content Include="Content\Theme\css\fontastic.css" />
     <Content Include="Content\Theme\css\style.blue.css" />
@@ -502,6 +513,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Views\ManageData\components\goadventure-log.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -516,10 +530,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\ManageTrip\TripEstimation.cshtml" />
+    <Content Include="Views\ManageData\Index.cshtml" />
+    <Content Include="Views\ManageData\components\HelloWorld.vue" />
+    <Content Include="Views\ManageData\_Stay.cshtml" />
+    <Content Include="Views\ManageData\_Trasportation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -533,6 +551,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App.DAL\App.DAL.csproj">
+      <Project>{752db7b3-e96c-40d7-96eb-ce71e391ba25}</Project>
+      <Name>App.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
