@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using App.Models.Admin;
 
 namespace AdminApp.Controllers
 {
@@ -79,11 +80,22 @@ namespace AdminApp.Controllers
         #region CRUD
 
         [HttpPost]
-        public string CreateStay(int eventDetailId,int expenseTypeId, string name, double amount, string notes)
+        public string CreateStay(int eventDetailId, int expenseTypeId, string name, double amount, string notes)
         {
             try
             {
-                return "OK";
+                var expenseObj = new EventExpensesEstimate
+                {
+                    EventID = eventDetailId,
+                    ExpensesTypeid = expenseTypeId,
+                    ExpenseTypeSource = name,
+                    ExpenseAmount = amount,
+                    Notes = notes
+                };
+
+                var result = dbStore.CreateNewStay(expenseObj);
+
+                return (result) ? "ok" : "something went wrong";
             }
             catch (Exception ex)
             {

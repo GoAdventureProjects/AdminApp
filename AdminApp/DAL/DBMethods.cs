@@ -74,5 +74,18 @@ namespace AdminApp.DAL
             }
             return null;
         }
+
+        public bool CreateNewStay(EventExpensesEstimate eventExpenses)
+        {
+            try
+            {
+                return DAL.CreateStay(eventExpenses);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
+        }
     }
 }

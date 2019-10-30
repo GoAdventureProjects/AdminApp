@@ -221,7 +221,7 @@
                             debugger;
                             var param = {
                                 eventDetailId: self.selectedEvent,
-                                expenseTypeId: window._EventExpenseType["Stay"]["ExpensesTypeid"],
+                                expenseTypeId: getExpenseTypeId("stay"),
                                 name: self.crud.stay.name,
                                 amount: self.crud.stay.amount,
                                 notes: self.crud.stay.notes
@@ -231,11 +231,12 @@
                                 method: "POST",
                                 headers: {
                                     'Content-Type': 'application/json'
-                                },                                     
+                                },
                                 body: JSON.stringify(param)
                             }).then(response => {
-                                    debugger;
-                                })
+                                debugger
+                                alert(response.statusText);
+                            });
                         }
                     }
                 }
@@ -249,7 +250,9 @@
             return data.filter(x => x["ExpensesTypeid"] == typeId);
         }
 
-        function getExpenseTypeId(type)
+        function getExpenseTypeId(type) {
+            return window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == type)[0]["ExpensesTypeid"]
+        }
 
     })
 </script>

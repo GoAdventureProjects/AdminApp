@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.Sql;
 using System.Data.SqlClient;
+using App.Models.Admin;
 
 namespace App.DAL.StoredProcs
 {
@@ -101,15 +102,23 @@ namespace App.DAL.StoredProcs
 
         #region    create/update
 
-        public string CreateStay(int eventDetailId,int expenseTypeId, string name,double amount,string notes)
+        public bool CreateStay(EventExpensesEstimate eventExpenses)
         {
             try
             {
-                var query = $"UPDATE finance.EventExpensesEstimate SET EventID={eventDetailId},ExpensesTypeid={expenseTypeId},ExpenseTypeSource='{name}',ExpenseAmount={amount},Notes='{notes}'";
+                var query = $"INSERT INTO finance.EventExpensesEstimate (EventID,ExpensesTypeid,ExpenseTypeSource,ExpenseAmount,Notes) VALUES " +
+                    $"(@EventId,@ExpenseTypeId,@StayName,@Amount,@Notes)";
+
                 var cmd = dbmanager.GetSqlCommand(query);
                 cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@EventId", eventExpenses.EventID);
+                cmd.Parameters.AddWithValue("@ExpenseTypeId", eventExpenses.ExpensesTypeid);
+                cmd.Parameters.AddWithValue("@StayName", eventExpenses.ExpenseTypeSource);
+                cmd.Parameters.AddWithValue("@Amount", eventExpenses.ExpenseAmount);
+                cmd.Parameters.AddWithValue("@Notes", eventExpenses.Notes);
                 var rows = cmd.ExecuteNonQuery();
-                return (rows >= 1) ? "OK" : "not saved";
+
+                return (rows >= 1);
             }
             catch (Exception ex)
             {
