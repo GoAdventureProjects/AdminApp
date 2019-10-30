@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using AdminApp.Models;
+using App.Models.Admin;
 
 namespace AdminApp.DAL
 {

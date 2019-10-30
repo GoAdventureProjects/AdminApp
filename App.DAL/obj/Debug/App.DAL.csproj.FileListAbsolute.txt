@@ -4,3 +4,6 @@ D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csprojAssemblyRef
 D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CoreCompileInputs.cache
 D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.dll
 D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.pdb
+D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.pdb
+D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CopyComplete

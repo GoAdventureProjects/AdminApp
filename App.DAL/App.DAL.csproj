@@ -52,5 +52,11 @@
     <Folder Include="Admin\" />
     <Folder Include="EntityFramework\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App.Models\App.Models.csproj">
+      <Project>{f87054f5-0c42-4a72-9acd-36f24e1400c1}</Project>
+      <Name>App.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

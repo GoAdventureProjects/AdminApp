@@ -154,11 +154,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventDetails.cs" />
-    <Compile Include="Models\EventExpensesEstimate.cs" />
-    <Compile Include="Models\LuEventExpenseType.cs" />
-    <Compile Include="Models\LuEvents.cs" />
-    <Compile Include="Models\LuEventType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -538,6 +533,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -556,6 +552,10 @@
     <ProjectReference Include="..\App.DAL\App.DAL.csproj">
       <Project>{752db7b3-e96c-40d7-96eb-ce71e391ba25}</Project>
       <Name>App.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\App.Models\App.Models.csproj">
+      <Project>{f87054f5-0c42-4a72-9acd-36f24e1400c1}</Project>
+      <Name>App.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
