@@ -98,5 +98,25 @@ namespace App.DAL.StoredProcs
                 throw ex;
             }
         }
+
+        #region    create/update
+
+        public string CreateStay(int eventDetailId,int expenseTypeId, string name,double amount,string notes)
+        {
+            try
+            {
+                var query = $"UPDATE finance.EventExpensesEstimate SET EventID={eventDetailId},ExpensesTypeid={expenseTypeId},ExpenseTypeSource='{name}',ExpenseAmount={amount},Notes='{notes}'";
+                var cmd = dbmanager.GetSqlCommand(query);
+                cmd.CommandType = CommandType.Text;
+                var rows = cmd.ExecuteNonQuery();
+                return (rows >= 1) ? "OK" : "not saved";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
     }
 }

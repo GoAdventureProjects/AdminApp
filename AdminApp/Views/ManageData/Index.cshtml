@@ -44,7 +44,7 @@
 
                     <div class="col-md-8">
                         <div class="form-group">
-                            <select name="account" id="ddlEvents" class="form-control show-tick" data-live-search="true" data-size="15" v-on:change="onEventChange($event)">
+                            <select name="account" id="ddlEvents" class="form-control show-tick" data-live-search="true" data-size="15" v-on:change="onEventChange($event)" v-model="selectedEvent">
                                 <option>Select Event</option>
                                 <option v-for="event in eventDetails.currentEventData" v-bind:value="event['EventDetailsId']"> {{ event["EventTitle"] }} </option>
                             </select>
@@ -66,16 +66,20 @@
 
                 <!-- add new stay-->
                 <div class="row">
-                    <div class="form-group">
-                        <label for="inlineFormInput" class="sr-only">Name</label>
-                        <input id="inlineFormInput" type="text" placeholder="Jane Doe" class="mr-3 form-control">
+                    <div class="form-group col-md-3">
+                        <label>Stay</label>
+                        <input id="txtStayName" type="text" placeholder="hotel/stay" class="form-control" v-model="crud.stay.name">
                     </div>
-                    <div class="form-group">
-                        <label for="inlineFormInputGroup" class="sr-only">Username</label>
-                        <input id="inlineFormInputGroup" type="text" placeholder="Username" class="mr-3 form-control">
+                    <div class="form-group col-md-3">
+                        <label>Cost</label>
+                        <input id="txtStayAmount" type="text" placeholder="cost/person/day" class="form-control" v-model="crud.stay.amount">
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="form-group col-md-3">
+                        <label>Notes</label>
+                        <input id="txtStayNotes" type="text" placeholder="additional information" class="form-control" v-model="crud.stay.notes">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="button" class="btn btn-primary" value="Save" v-on:click="crudMethods().createStay()" />
                     </div>
                 </div>
 
@@ -84,12 +88,18 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th> Stay </th>
+                                <th> Amount (cost/person/day)</th>
+                                <th> Mode of payment </th>
+                                <th> Notes </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
+                            <tr v-for="row in expenseType.stay">
+                                <td> {{ row["ExpenseTypeSource"] }} </td>
+                                <td> &#x20b9; {{ row["ExpenseAmount"] }} </td>
+                                <td> {{ row["ExpenseModeOfPayment"] }} </td>
+                                <td> {{ row["Notes"] }} </td>
                             </tr>
                         </tbody>
                     </table>
@@ -152,7 +162,7 @@
 
     //initialize bootstrap-select dropdown
     $(function () {
-      // $("#ddlEvents").selectpicker();
+        // $("#ddlEvents").selectpicker();
 
 
         var app = new Vue({
@@ -161,15 +171,23 @@
                 //'app-world': window.httpVueLoader('components/HelloWorld.vue')
             },
             data: {
+                selectedEvent: "",
                 eventDetails: {
                     originalData: [],
-                    eventTypes:[],
-                    currentEventData:[]
+                    eventTypes: [],
+                    currentEventData: []
                 },
                 expenseType: {
                     stay: [],
                     transport: [],
                     guide: []
+                },
+                crud: {
+                    stay: {
+                        name: "",
+                        amount: 0,
+                        notes: ""
+                    }
                 }
             },
             mounted: function () {
@@ -178,7 +196,7 @@
                     .then(result => result.json())
                     .then(jsondata => {
                         this.eventDetails.originalData = jsondata;
-                        this.eventDetails.eventTypes = jsondata.map(x => x.EventType).filter((x, i, arr) => arr.indexOf(x) == i).filter(x => x != null); //filter unique 
+                        this.eventDetails.eventTypes = jsondata.map(x => x.EventType).filter((x, i, arr) => arr.indexOf(x) == i).filter(x => x != null); //filter unique
                     });
 
             },
@@ -188,13 +206,50 @@
                     this.eventDetails.currentEventData = this.eventDetails.originalData.filter(x => x.EventType == eventType);
                 },
                 onEventChange: function (el) {
-                    var event = el.target.value;
-                    this.expenseType.stay=
+                    var id = el.target.value;
+                    fetch("/ManageData/GetEventExpenses?eventDetailId=" + id)
+                        .then(result => result.json())
+                        .then(jsondata => {
+                            debugger;
+                            this.expenseType.stay = getDataByCategory(jsondata, "stay");
+                        })
+                },
+                crudMethods: function () {
+                    var self = this;
+                    return {
+                        createStay: function () {
+                            debugger;
+                            var param = {
+                                eventDetailId: self.selectedEvent,
+                                expenseTypeId: window._EventExpenseType["Stay"]["ExpensesTypeid"],
+                                name: self.crud.stay.name,
+                                amount: self.crud.stay.amount,
+                                notes: self.crud.stay.notes
+                            };
+
+                            fetch("/ManageData/CreateStay", {
+                                method: "POST",
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },                                     
+                                body: JSON.stringify(param)
+                            }).then(response => {
+                                    debugger;
+                                })
+                        }
+                    }
                 }
             }
         });
 
 
+        //utils
+        function getDataByCategory(data, type) {
+            var typeId = window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == type)[0]["ExpensesTypeid"];
+            return data.filter(x => x["ExpensesTypeid"] == typeId);
+        }
+
+        function getExpenseTypeId(type)
 
     })
 </script>
