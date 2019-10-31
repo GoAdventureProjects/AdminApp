@@ -116,7 +116,7 @@ namespace App.DAL.StoredProcs
                 cmd.Parameters.AddWithValue("@StayName", eventExpenses.ExpenseTypeSource);
                 cmd.Parameters.AddWithValue("@Amount", eventExpenses.ExpenseAmount);
                 cmd.Parameters.AddWithValue("@Notes", eventExpenses.Notes);
-                var rows = cmd.ExecuteNonQuery();
+                var rows = dbmanager.ExecuteNonQuery(cmd);
 
                 return (rows >= 1);
             }

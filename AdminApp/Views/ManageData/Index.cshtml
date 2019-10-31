@@ -14,9 +14,9 @@
 <script src="~/Content/plugins/bootstrap_select/bootstrap-select.min.js"></script>
 <script src="~/Scripts/popper.min.js"></script>
 
-<!-- vue -->
-@*<script src="https://unpkg.com/http-vue-loader"></script>*@
-
+<!-- bootstrap toggle -->
+<link href="~/Content/plugins/bootstrap_toggle/bootstrap-toggle.min.css" rel="stylesheet" />
+<script src="~/Content/plugins/bootstrap_toggle/bootstrap-toggle.min.js"></script>
 
 @section page_header{
     <div class="container-fluid">
@@ -44,7 +44,7 @@
 
                     <div class="col-md-8">
                         <div class="form-group">
-                            <select name="account" id="ddlEvents" class="form-control show-tick" data-live-search="true" data-size="15" v-on:change="onEventChange($event)" v-model="selectedEvent">
+                            <select name="account" id="ddlEvents" class="form-control show-tick" data-live-search="true" data-size="15" v-on:change="onEventChange()" v-model="selectedEvent">
                                 <option>Select Event</option>
                                 <option v-for="event in eventDetails.currentEventData" v-bind:value="event['EventDetailsId']"> {{ event["EventTitle"] }} </option>
                             </select>
@@ -83,6 +83,8 @@
                     </div>
                 </div>
 
+                <input id="cbPaymentMode_" type="checkbox" data-type="paymentMode" data-toggle="toggle"  data-on="Enabled" data-off="Disabled">
+
 
                 <div class="table-responsive">
                     <table class="table">
@@ -95,11 +97,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="row in expenseType.stay">
+                            <tr v-for="(row,index) in expenseType.stay">
                                 <td> {{ row["ExpenseTypeSource"] }} </td>
                                 <td> &#x20b9; {{ row["ExpenseAmount"] }} </td>
-                                <td> {{ row["ExpenseModeOfPayment"] }} </td>
-                                <td> {{ row["Notes"] }} </td>
+                                <td>
+                                    <input v-bind:id="'cbPaymentMode_'+index" type="checkbox" data-type="paymentMode" data-toggle="toggle">
+                                    @*{{ renderToggleBtns('cbPaymentMode_'+index,row["ExpenseModeOfPayment"]) }}*@
+                                </td>
+                                <td>
+                                    {{ row["Notes"] }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -160,6 +167,10 @@
 
 <script type="text/javascript">
 
+
+    //init bootstrap toogle checkboxes
+
+
     //initialize bootstrap-select dropdown
     $(function () {
         // $("#ddlEvents").selectpicker();
@@ -185,7 +196,7 @@
                 crud: {
                     stay: {
                         name: "",
-                        amount: 0,
+                        amount: null,
                         notes: ""
                     }
                 }
@@ -198,21 +209,29 @@
                         this.eventDetails.originalData = jsondata;
                         this.eventDetails.eventTypes = jsondata.map(x => x.EventType).filter((x, i, arr) => arr.indexOf(x) == i).filter(x => x != null); //filter unique
                     });
-
             },
             methods: {
                 onEventTypeChange: function (el) {
                     var eventType = el.target.value;
                     this.eventDetails.currentEventData = this.eventDetails.originalData.filter(x => x.EventType == eventType);
                 },
-                onEventChange: function (el) {
-                    var id = el.target.value;
-                    fetch("/ManageData/GetEventExpenses?eventDetailId=" + id)
+                onEventChange: function () {
+                    fetch("/ManageData/GetEventExpenses?eventDetailId=" + this.selectedEvent)
                         .then(result => result.json())
                         .then(jsondata => {
                             debugger;
                             this.expenseType.stay = getDataByCategory(jsondata, "stay");
                         })
+                },
+                renderToggleBtns: function (id,value) {
+                    debugger;
+                    value = value || "on";
+                    //$("input[type='checkbox'][data-type='paymentMode']")
+                    $("#"+id).bootstrapToggle(value, {
+                        on: 'online',
+                        off: 'offline',
+                        onstyle: 'success'
+                    });
                 },
                 crudMethods: function () {
                     var self = this;
@@ -233,10 +252,18 @@
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify(param)
-                            }).then(response => {
-                                debugger
-                                alert(response.statusText);
-                            });
+                            })
+                                .then(response => response.json())
+                                .then(jsonresponse => {
+                                    debugger
+                                    alert(jsonresponse);
+
+                                    self.crud.stay.name = "";
+                                    self.crud.stay.amount = null;
+                                    self.crud.stay.notes = "";
+                                    //refresh data
+                                    self.onEventChange();
+                                });
                         }
                     }
                 }

@@ -26,6 +26,10 @@ namespace AdminApp.Controllers
             return View();
         }
 
+        public ActionResult dummy()
+        {
+            return View();
+        }
         public string GetAllEvents()
         {
             try
@@ -95,7 +99,7 @@ namespace AdminApp.Controllers
 
                 var result = dbStore.CreateNewStay(expenseObj);
 
-                return (result) ? "ok" : "something went wrong";
+                return (result) ? "saved successfully" : "something went wrong";
             }
             catch (Exception ex)
             {

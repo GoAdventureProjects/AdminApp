@@ -54,5 +54,26 @@ namespace App.DAL
                 sqlCommand.Connection.Close();
             }
         }
+
+        public int ExecuteNonQuery(SqlCommand sqlCommand)
+        {
+            try
+            {
+                sqlCommand.Connection.Open();
+                return sqlCommand.ExecuteNonQuery();
+            }
+            catch (SqlException sqex)
+            {
+                throw sqex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlCommand.Connection.Close();
+            }
+        }
     }
 }
