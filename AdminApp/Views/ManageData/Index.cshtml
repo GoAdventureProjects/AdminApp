@@ -83,8 +83,6 @@
                     </div>
                 </div>
 
-                <input id="cbPaymentMode_" type="checkbox" data-type="paymentMode" data-toggle="toggle"  data-on="Enabled" data-off="Disabled">
-
 
                 <div class="table-responsive">
                     <table class="table">
@@ -101,7 +99,8 @@
                                 <td> {{ row["ExpenseTypeSource"] }} </td>
                                 <td> &#x20b9; {{ row["ExpenseAmount"] }} </td>
                                 <td>
-                                    <input v-bind:id="'cbPaymentMode_'+index" type="checkbox" data-type="paymentMode" data-toggle="toggle">
+                                    {{ row["ExpenseModeOfPayment"] }}
+                                    @*<input v-bind:id="'cbPaymentMode_'+index" type="checkbox" data-type="paymentMode" data-toggle="toggle">*@
                                     @*{{ renderToggleBtns('cbPaymentMode_'+index,row["ExpenseModeOfPayment"]) }}*@
                                 </td>
                                 <td>
@@ -120,19 +119,18 @@
                 <h3 class="h4">Manage-Transportation</h3>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="form-group col-md-4" v-for="tp in expenseType.transport">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                {{ tp["slab"] }}
+                            </span>
+                        </div>
+                        <input type="number" placeholder="Username" class="form-control" v-bind:value="tp['amount']" v-model="tp.amount">
+                    </div>
+                </div>
+                <div>
+                    <input  type="button" class="btn btn-primary" value="Update Amount" v-on:click="crudMethods().updateTransport()()" />
                 </div>
             </div>
         </div>
@@ -143,20 +141,7 @@
                 <h3 class="h4">Manage-Guide</h3>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+
             </div>
         </div>
 
@@ -221,13 +206,14 @@
                         .then(jsondata => {
                             debugger;
                             this.expenseType.stay = getDataByCategory(jsondata, "stay");
+                            this.expenseType.transport = getTrasportData(jsondata);
                         })
                 },
-                renderToggleBtns: function (id,value) {
+                renderToggleBtns: function (id, value) {
                     debugger;
                     value = value || "on";
                     //$("input[type='checkbox'][data-type='paymentMode']")
-                    $("#"+id).bootstrapToggle(value, {
+                    $("#" + id).bootstrapToggle(value, {
                         on: 'online',
                         off: 'offline',
                         onstyle: 'success'
@@ -243,6 +229,7 @@
                                 expenseTypeId: getExpenseTypeId("stay"),
                                 name: self.crud.stay.name,
                                 amount: self.crud.stay.amount,
+                                paymentMode: 'online',
                                 notes: self.crud.stay.notes
                             };
 
@@ -264,6 +251,15 @@
                                     //refresh data
                                     self.onEventChange();
                                 });
+                        },
+                        updateTransport: function () {
+                            fetch("/ManageData/UpdateTrasport", {
+                                method: "POST",
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(self.expenseType.transport)
+                            });
                         }
                     }
                 }
@@ -279,6 +275,30 @@
 
         function getExpenseTypeId(type) {
             return window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == type)[0]["ExpensesTypeid"]
+        }
+
+        function getTrasportData(data) {
+            debugger;
+            var arr = [];
+            var ids = window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == "transport");
+            for (let i = 0; i < ids.length; i++) {
+                if (data.filter(x => x["ExpensesTypeid"] == ids[i]).length > 0) {
+                    arr.push({
+                        ExpensesTypeid: ids[i]["ExpensesTypeid"],
+                        slab: ids[i]["ExpenseTypeCode"],
+                        amount: (data.filter(x => x["ExpensesTypeid"] == ids[i]))[0]["ExpenseAmount"]
+                    })
+                }
+                else {
+                    arr.push({
+                        ExpensesTypeid: ids[i]["ExpensesTypeid"],
+                        slab: ids[i]["ExpenseTypeCode"],
+                        amount: 0
+                    })
+                }
+            }
+            return arr;
+            //data.filter(ids.indexOf(x["ExpensesTypeid"] != -1)).map(x => new { slab: x["ExpensesTypeCode"],amount:x[""] })
         }
 
     })

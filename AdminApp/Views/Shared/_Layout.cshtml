@@ -216,7 +216,6 @@
         fetch("/home/GetExpenseTypes")
             .then(response => response.json())
             .then(jsondata => {
-                debugger;
                 window._EventExpenseType = jsondata;
             })
     </script>

@@ -4,3 +4,9 @@ D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojAssem
 D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreCompileInputs.cache
 D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
 D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.pdb
+F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojAssemblyReference.cache
+F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreCompileInputs.cache
+F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
+F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb

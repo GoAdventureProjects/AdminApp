@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using App.Models.Admin;
+using System.IO;
 
 namespace AdminApp.Controllers
 {
@@ -84,7 +85,7 @@ namespace AdminApp.Controllers
         #region CRUD
 
         [HttpPost]
-        public string CreateStay(int eventDetailId, int expenseTypeId, string name, double amount, string notes)
+        public string CreateStay(int eventDetailId, int expenseTypeId, string name, double amount,string paymentMode, string notes)
         {
             try
             {
@@ -94,7 +95,8 @@ namespace AdminApp.Controllers
                     ExpensesTypeid = expenseTypeId,
                     ExpenseTypeSource = name,
                     ExpenseAmount = amount,
-                    Notes = notes
+					ExpenseModeOfPayment= paymentMode,
+					Notes = notes
                 };
 
                 var result = dbStore.CreateNewStay(expenseObj);
@@ -107,7 +109,16 @@ namespace AdminApp.Controllers
             }
         }
 
-        #endregion
+		[HttpPost]
+		public string UpdateTrasport()
+		{
+			var req = Request.InputStream;
+			req.Seek(0, SeekOrigin.Begin);
+			var body = new StreamReader(req).ReadToEnd();
 
-    }
+			return "";
+		}
+		#endregion
+
+	}
 }

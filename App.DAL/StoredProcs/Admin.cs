@@ -107,7 +107,7 @@ namespace App.DAL.StoredProcs
             try
             {
                 var query = $"INSERT INTO finance.EventExpensesEstimate (EventID,ExpensesTypeid,ExpenseTypeSource,ExpenseAmount,Notes) VALUES " +
-                    $"(@EventId,@ExpenseTypeId,@StayName,@Amount,@Notes)";
+                    $"(@EventId,@ExpenseTypeId,@StayName,@Amount,@paymentMode,@Notes)";
 
                 var cmd = dbmanager.GetSqlCommand(query);
                 cmd.CommandType = CommandType.Text;
@@ -115,7 +115,8 @@ namespace App.DAL.StoredProcs
                 cmd.Parameters.AddWithValue("@ExpenseTypeId", eventExpenses.ExpensesTypeid);
                 cmd.Parameters.AddWithValue("@StayName", eventExpenses.ExpenseTypeSource);
                 cmd.Parameters.AddWithValue("@Amount", eventExpenses.ExpenseAmount);
-                cmd.Parameters.AddWithValue("@Notes", eventExpenses.Notes);
+				cmd.Parameters.AddWithValue("@paymentMode", eventExpenses.ExpenseModeOfPayment);
+				cmd.Parameters.AddWithValue("@Notes", eventExpenses.Notes);
                 var rows = dbmanager.ExecuteNonQuery(cmd);
 
                 return (rows >= 1);
