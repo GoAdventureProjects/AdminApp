@@ -114,8 +114,10 @@ namespace AdminApp.Controllers
 		{
 			var req = Request.InputStream;
 			req.Seek(0, SeekOrigin.Begin);
-			var body = new StreamReader(req).ReadToEnd();
+			var jsonBody = new StreamReader(req).ReadToEnd();
+            var data = JsonConvert.DeserializeObject<List<TransportSlab>>(jsonBody);
 
+            var result = dbStore.UpdateTransport(data);
 			return "";
 		}
 		#endregion

@@ -16,3 +16,13 @@ F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CoreCompile
 F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CopyComplete
 F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.dll
 F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.pdb
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\App.DAL.dll
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\App.DAL.pdb
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.dll
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.pdb
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CoreCompileInputs.cache
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.dll
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.pdb
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\Newtonsoft.Json.dll
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\Newtonsoft.Json.xml
+E:\Rajashekar\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csprojResolveAssemblyReference.cache

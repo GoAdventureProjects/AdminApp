@@ -83,9 +83,21 @@ namespace AdminApp.DAL
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             
+        }
+
+        public bool UpdateTransport(List<TransportSlab> transportSlabs)
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

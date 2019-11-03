@@ -1,3 +1,7 @@
 /.vs
 /AdminApp/bin
 /AdminApp/obj
+/App.DAL/bin
+/App.DAL/obj
+/App.Models/bin
+/App.Models/obj

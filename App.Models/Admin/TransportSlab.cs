@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace App.Models.Admin
 {
-	class TransportSlab
+	public class TransportSlab
 	{
 		public int ExpensesTypeid { get; set; }
 		[JsonProperty("slab")]

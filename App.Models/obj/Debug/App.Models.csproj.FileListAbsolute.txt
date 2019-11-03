@@ -10,3 +10,11 @@ F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojAssemb
 F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreCompileInputs.cache
 F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
 F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb
+E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreCompileInputs.cache
+E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
+E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb
+E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll
+E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.pdb
+E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.dll
+E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.xml
+E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojResolveAssemblyReference.cache
