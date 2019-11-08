@@ -3,10 +3,5 @@
 *.manifest
 *.cache
 /.vs
-/AdminApp/bin/*.dll
-/AdminApp/obj/*.dll
-/App.DAL/bin/*.dll
-/App.DAL/obj/*.dll
-/App.Models/bin/*.dll
-/App.Models/obj
-/*.dll
+/**/bin
+/**/obj

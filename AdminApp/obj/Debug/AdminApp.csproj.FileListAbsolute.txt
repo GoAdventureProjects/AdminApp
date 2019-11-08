@@ -222,3 +222,4 @@ E:\Rajashekar\GoAdventure\AdminApp\AdminApp\obj\Debug\AdminApp.csprojResolveAsse
 E:\Rajashekar\GoAdventure\AdminApp\AdminApp\obj\Debug\AdminApp.csproj.CoreCompileInputs.cache
 E:\Rajashekar\GoAdventure\AdminApp\AdminApp\obj\Debug\AdminApp.dll
 E:\Rajashekar\GoAdventure\AdminApp\AdminApp\obj\Debug\AdminApp.pdb
+D:\Rajashekar.T\GoAdventure\AdminApp\AdminApp\bin\App.Models.dll.config

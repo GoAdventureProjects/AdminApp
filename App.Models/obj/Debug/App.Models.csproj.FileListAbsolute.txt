@@ -21,3 +21,8 @@ E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojResolve
 D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.dll
 D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.xml
 D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CopyComplete
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll.config
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.SqlServer.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.xml
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.SqlServer.xml
