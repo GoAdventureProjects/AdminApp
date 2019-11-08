@@ -14,5 +14,7 @@ namespace App.Models.Admin
 		public string Slab { get; set; }
 		[JsonProperty("amount")]
 		public decimal Amount { get; set; }
-	}
+        [JsonProperty("paymentMode")]
+        public string ModeOfPayment { get; set; }
+    }
 }

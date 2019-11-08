@@ -88,7 +88,7 @@ namespace AdminApp.DAL
             
         }
 
-        public bool UpdateTransport(List<TransportSlab> transportSlabs)
+        public bool UpdateTransport(int eventId,List<TransportSlab> transportSlabs)
         {
             try
             {

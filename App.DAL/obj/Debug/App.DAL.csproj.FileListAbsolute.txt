@@ -26,3 +26,5 @@ E:\Rajashekar\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.pdb
 E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\Newtonsoft.Json.dll
 E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\Newtonsoft.Json.xml
 E:\Rajashekar\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csprojResolveAssemblyReference.cache
+D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\bin\Debug\Newtonsoft.Json.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\bin\Debug\Newtonsoft.Json.xml

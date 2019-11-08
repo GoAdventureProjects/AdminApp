@@ -18,3 +18,6 @@ E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.pdb
 E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.dll
 E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.xml
 E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojResolveAssemblyReference.cache
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.xml
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CopyComplete

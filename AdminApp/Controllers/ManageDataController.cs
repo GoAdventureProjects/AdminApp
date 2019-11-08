@@ -110,15 +110,15 @@ namespace AdminApp.Controllers
         }
 
 		[HttpPost]
-		public string UpdateTrasport()
+		public string UpdateTrasport(int EventId)
 		{
 			var req = Request.InputStream;
 			req.Seek(0, SeekOrigin.Begin);
 			var jsonBody = new StreamReader(req).ReadToEnd();
             var data = JsonConvert.DeserializeObject<List<TransportSlab>>(jsonBody);
 
-            var result = dbStore.UpdateTransport(data);
-			return "";
+            var result = dbStore.UpdateTransport(EventId,data);
+            return (result) ? "updated successfully" : "something went wrong";
 		}
 		#endregion
 

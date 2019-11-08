@@ -204,13 +204,11 @@
                     fetch("/ManageData/GetEventExpenses?eventDetailId=" + this.selectedEvent)
                         .then(result => result.json())
                         .then(jsondata => {
-                            debugger;
                             this.expenseType.stay = getDataByCategory(jsondata, "stay");
                             this.expenseType.transport = getTrasportData(jsondata);
                         })
                 },
                 renderToggleBtns: function (id, value) {
-                    debugger;
                     value = value || "on";
                     //$("input[type='checkbox'][data-type='paymentMode']")
                     $("#" + id).bootstrapToggle(value, {
@@ -223,7 +221,6 @@
                     var self = this;
                     return {
                         createStay: function () {
-                            debugger;
                             var param = {
                                 eventDetailId: self.selectedEvent,
                                 expenseTypeId: getExpenseTypeId("stay"),
@@ -242,7 +239,6 @@
                             })
                                 .then(response => response.json())
                                 .then(jsonresponse => {
-                                    debugger
                                     alert(jsonresponse);
 
                                     self.crud.stay.name = "";
@@ -253,13 +249,15 @@
                                 });
                         },
                         updateTransport: function () {
-                            fetch("/ManageData/UpdateTrasport", {
+                            fetch("/ManageData/UpdateTrasport?EventId=" + self.selectedEvent, {
                                 method: "POST",
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
                                 body: JSON.stringify(self.expenseType.transport)
-                            });
+                            })
+                                .then(response => response.text())
+                                .then(body => alert(body));
                         }
                     }
                 }

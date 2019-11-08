@@ -127,6 +127,40 @@ namespace App.DAL.StoredProcs
             }
         }
 
+        public bool UpdateTransport(int eventId, List<TransportSlab> transportSlabs, EventExpensesEstimate eventExpenses)
+        {
+            var ids = string.Join<int>(",", transportSlabs.Select(x => x.ExpensesTypeid).ToList());
+
+            try
+            {
+                var selectQuery = $"select *from finance.EventExpensesEstimate where EventId=@EventId and ExpensesTypeid in (@ExpenseTypeIds)";
+
+                var cmd = dbmanager.GetSqlCommand(selectQuery);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@EventId", eventExpenses.EventID);
+                cmd.Parameters.AddWithValue("@ExpenseTypeIds", ids);
+
+                var dt = dbmanager.GetDataTableResult(cmd);
+                //update exissting records
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        var ts = transportSlabs.Where(x => x.ExpensesTypeid == int.Parse(row["ExpensesTypeid"].ToString())).First();
+                        var updateQuery = $"update finance.EventExpensesEstimate  set ExpenseAmount={ts.Amount},ExpenseModeOfPayment={ts.ModeOfPayment ?? "online"}, SlabRange ={ts.Slab} ";
+                        cmd.CommandText = updateQuery;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                //insert new records
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
     }
 }

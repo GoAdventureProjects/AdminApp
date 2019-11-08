@@ -1,7 +1,12 @@
+*.exe
+*.pdb
+*.manifest
+*.cache
 /.vs
-/AdminApp/bin
-/AdminApp/obj
-/App.DAL/bin
-/App.DAL/obj
-/App.Models/bin
+/AdminApp/bin/*.dll
+/AdminApp/obj/*.dll
+/App.DAL/bin/*.dll
+/App.DAL/obj/*.dll
+/App.Models/bin/*.dll
 /App.Models/obj
+/*.dll
