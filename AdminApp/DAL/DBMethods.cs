@@ -92,7 +92,7 @@ namespace AdminApp.DAL
         {
             try
             {
-                return true;
+                return DAL.UpdateTransport(eventId, transportSlabs);
             }
             catch (Exception ex)
             {

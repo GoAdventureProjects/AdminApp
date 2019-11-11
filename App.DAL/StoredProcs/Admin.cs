@@ -127,38 +127,73 @@ namespace App.DAL.StoredProcs
             }
         }
 
-        public bool UpdateTransport(int eventId, List<TransportSlab> transportSlabs, EventExpensesEstimate eventExpenses)
+        public bool UpdateTransport(int eventId, List<TransportSlab> transportSlabs)
         {
             var ids = string.Join<int>(",", transportSlabs.Select(x => x.ExpensesTypeid).ToList());
-
+            var selectQuery = $"select *from finance.EventExpensesEstimate where EventId=@EventId and ExpensesTypeid in ({ids})";
+            var cmd = dbmanager.GetSqlCommand(selectQuery);
             try
             {
-                var selectQuery = $"select *from finance.EventExpensesEstimate where EventId=@EventId and ExpensesTypeid in (@ExpenseTypeIds)";
-
-                var cmd = dbmanager.GetSqlCommand(selectQuery);
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@EventId", eventExpenses.EventID);
-                cmd.Parameters.AddWithValue("@ExpenseTypeIds", ids);
+                cmd.Parameters.AddWithValue("@EventId", eventId);
+                //cmd.Parameters.AddWithValue("@ExpenseTypeIds", ids);
 
                 var dt = dbmanager.GetDataTableResult(cmd);
+
+                //clear above params
+                cmd.Parameters.Clear();
+
                 //update exissting records
                 if (dt != null && dt.Rows.Count > 0)
                 {
+                    cmd.Connection.Open();
                     foreach (DataRow row in dt.Rows)
                     {
+
                         var ts = transportSlabs.Where(x => x.ExpensesTypeid == int.Parse(row["ExpensesTypeid"].ToString())).First();
                         var updateQuery = $"update finance.EventExpensesEstimate  set ExpenseAmount={ts.Amount},ExpenseModeOfPayment={ts.ModeOfPayment ?? "online"}, SlabRange ={ts.Slab} ";
                         cmd.CommandText = updateQuery;
-                        cmd.ExecuteNonQuery();
+                        dbmanager.ExecuteNonQuery(cmd);
                     }
                 }
                 //insert new records
-                
+                else
+                {
+                    cmd.Connection.Open();
+
+                    var insertQuery = $"insert into finance.EventExpensesEstimate " +
+                                                $"(EventId,ExpensesTypeid,SlabRange,ExpenseAmount,ExpenseModeOfPayment,CreatedBy,CreatedDate) " +
+                                                $"values (@EventId,@ExpensesTypeid,@SlabRange,@ExpenseAmount,@ExpenseModeOfPayment,@CreatedBy,@CreatedDate)";
+
+                    cmd.CommandText = insertQuery;
+
+                    for (int i = 0; i < transportSlabs.Count; i++)
+                    {
+                        cmd.Parameters.AddWithValue("@EventId", eventId);
+                        cmd.Parameters.AddWithValue("@ExpensesTypeid", transportSlabs[i].ExpensesTypeid);
+                        cmd.Parameters.AddWithValue("@SlabRange", transportSlabs[i].Slab);
+                        cmd.Parameters.AddWithValue("@ExpenseAmount", transportSlabs[i].Amount);
+                        cmd.Parameters.AddWithValue("@ExpenseModeOfPayment", (transportSlabs[i].ModeOfPayment) ?? "online");
+                        //cmd.Parameters.AddWithValue("@Notes", transportSlabs[i].);
+                        cmd.Parameters.AddWithValue("@CreatedBy", "Admin");
+                        cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+
+                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Clear();
+
+                        //dbmanager.ExecuteNonQuery(cmd);
+                    }
+                }
+
                 return true;
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                cmd.Connection.Close();
             }
         }
 
