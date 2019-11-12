@@ -146,12 +146,12 @@ namespace App.DAL.StoredProcs
                 //update exissting records
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    cmd.Connection.Open();
+                    //cmd.Connection.Open();
                     foreach (DataRow row in dt.Rows)
                     {
 
                         var ts = transportSlabs.Where(x => x.ExpensesTypeid == int.Parse(row["ExpensesTypeid"].ToString())).First();
-                        var updateQuery = $"update finance.EventExpensesEstimate  set ExpenseAmount={ts.Amount},ExpenseModeOfPayment={ts.ModeOfPayment ?? "online"}, SlabRange ={ts.Slab} ";
+                        var updateQuery = $"update finance.EventExpensesEstimate  set ExpenseAmount={ts.Amount},ExpenseModeOfPayment='{ts.ModeOfPayment ?? "online"}', SlabRange ='{ts.Slab}' where EventID={eventId} and ExpensesTypeid={ts.ExpensesTypeid} ";
                         cmd.CommandText = updateQuery;
                         dbmanager.ExecuteNonQuery(cmd);
                     }

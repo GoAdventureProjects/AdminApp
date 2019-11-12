@@ -141,7 +141,19 @@
                 <h3 class="h4">Manage-Guide</h3>
             </div>
             <div class="card-body">
-
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label for="inlineFormInput" class="sr-only">Name</label>
+                        <input id="inlineFormInput" type="text" placeholder="Guide Name" class="mr-3 form-control" v-bind:value="expenseType.guide.name" v-model="expenseType.guide.name">
+                    </div>
+                    <div class="form-group">
+                        <label for="inlineFormInputGroup" class="sr-only">Amount</label>
+                        <input id="inlineFormInputGroup" type="number" placeholder="Amount" class="mr-3 form-control" v-bind:value="expenseType.guide.amount" v-model="expenseType.guide.amount">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -206,6 +218,7 @@
                         .then(jsondata => {
                             this.expenseType.stay = getDataByCategory(jsondata, "stay");
                             this.expenseType.transport = getTrasportData(jsondata);
+                            this.expenseType.guide = getDataByCategory(jsondata, "Guide");
                         })
                 },
                 renderToggleBtns: function (id, value) {
@@ -267,7 +280,8 @@
 
         //utils
         function getDataByCategory(data, type) {
-            var typeId = window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == type)[0]["ExpensesTypeid"];
+            debugger;
+            var typeId = window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == type.toLowerCase())[0]["ExpensesTypeid"];
             return data.filter(x => x["ExpensesTypeid"] == typeId);
         }
 
@@ -276,15 +290,14 @@
         }
 
         function getTrasportData(data) {
-            debugger;
             var arr = [];
             var ids = window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == "transport");
             for (let i = 0; i < ids.length; i++) {
-                if (data.filter(x => x["ExpensesTypeid"] == ids[i]).length > 0) {
+                if (data.filter(x => x["ExpensesTypeid"] == ids[i]["ExpensesTypeid"]).length > 0) {
                     arr.push({
                         ExpensesTypeid: ids[i]["ExpensesTypeid"],
                         slab: ids[i]["ExpenseTypeCode"],
-                        amount: (data.filter(x => x["ExpensesTypeid"] == ids[i]))[0]["ExpenseAmount"]
+                        amount: (data.filter(x => x["ExpensesTypeid"] == ids[i]["ExpensesTypeid"]))[0]["ExpenseAmount"]
                     })
                 }
                 else {
