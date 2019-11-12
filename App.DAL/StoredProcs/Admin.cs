@@ -115,8 +115,8 @@ namespace App.DAL.StoredProcs
                 cmd.Parameters.AddWithValue("@ExpenseTypeId", eventExpenses.ExpensesTypeid);
                 cmd.Parameters.AddWithValue("@StayName", eventExpenses.ExpenseTypeSource);
                 cmd.Parameters.AddWithValue("@Amount", eventExpenses.ExpenseAmount);
-				cmd.Parameters.AddWithValue("@paymentMode", eventExpenses.ExpenseModeOfPayment);
-				cmd.Parameters.AddWithValue("@Notes", eventExpenses.Notes);
+                cmd.Parameters.AddWithValue("@paymentMode", eventExpenses.ExpenseModeOfPayment);
+                cmd.Parameters.AddWithValue("@Notes", eventExpenses.Notes);
                 var rows = dbmanager.ExecuteNonQuery(cmd);
 
                 return (rows >= 1);
@@ -194,6 +194,47 @@ namespace App.DAL.StoredProcs
             finally
             {
                 cmd.Connection.Close();
+            }
+        }
+
+        public bool UpdateGuide(int eventId, GuideExpense guide)
+        {
+            var selectQuery = $"select *from finance.EventExpensesEstimate where EventId=@EventId and ExpensesTypeid = {guide.ExpensesTypeid}";
+            var cmd = dbmanager.GetSqlCommand(selectQuery);
+            try
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@EventId", eventId);
+                var dt = dbmanager.GetDataTableResult(cmd);
+
+                cmd.Parameters.Clear();
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    cmd.CommandText = $"update finance.EventExpensesEstimate  set ExpenseTypeSource='{guide.Name}', ExpenseAmount ={guide.Amount},ExpenseModeOfPayment='{guide.PaymentMode ?? "online"}' where EventID={eventId} and ExpensesTypeid={guide.ExpensesTypeid} ";
+                    dbmanager.ExecuteNonQuery(cmd);
+                }
+                else
+                {
+                    var insertQuery = $"insert into finance.EventExpensesEstimate " +
+                                                $"(EventId,ExpensesTypeid,ExpenseTypeSource,ExpenseAmount,ExpenseModeOfPayment,CreatedBy,CreatedDate) " +
+                                                $"values (@EventId,@ExpensesTypeid,@GuideName,@ExpenseAmount,@ExpenseModeOfPayment,@CreatedBy,@CreatedDate)";
+
+                    cmd.CommandText = insertQuery;
+                    cmd.Parameters.AddWithValue("@EventId", eventId);
+                    cmd.Parameters.AddWithValue("@ExpensesTypeid", guide.ExpensesTypeid);
+                    cmd.Parameters.AddWithValue("@GuideName", guide.Name);
+                    cmd.Parameters.AddWithValue("@ExpenseAmount", guide.Amount);
+                    cmd.Parameters.AddWithValue("@ExpenseModeOfPayment", (guide.PaymentMode) ?? "online");
+                    cmd.Parameters.AddWithValue("@CreatedBy", "Admin");
+                    cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+                    dbmanager.ExecuteNonQuery(cmd);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 

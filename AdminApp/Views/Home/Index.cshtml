@@ -22,7 +22,7 @@
             <div class="card-header d-flex align-items-center">
                 <h3 class="h4">UpComming Events</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="max-height:450px;overflow-y:scroll">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -71,14 +71,13 @@
                 }
             },
             mounted: function () {
-                //this.getEventDetails();
+                this.getEventDetails();
             },
             methods: {
                 getEventDetails: function () {
                     fetch("/home/GetEventDetails")
                         .then(response => response.json())
                         .then(jsondata => {
-                            debugger
                             this.eventDetails.data = jsondata;
                         });
                 }

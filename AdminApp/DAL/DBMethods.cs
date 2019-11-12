@@ -99,5 +99,17 @@ namespace AdminApp.DAL
                 throw ex;
             }
         }
+
+        public bool UpdateGuide(int eventId, GuideExpense guide)
+        {
+            try
+            {
+                return DAL.UpdateGuide(eventId, guide);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -120,7 +120,19 @@ namespace AdminApp.Controllers
             var result = dbStore.UpdateTransport(EventId,data);
             return (result) ? "updated successfully" : "something went wrong";
 		}
-		#endregion
 
-	}
+        [HttpPost]
+        public string UpdateGuide(int EventId)
+        {
+            var req = Request.InputStream;
+            req.Seek(0, SeekOrigin.Begin);
+            var jsonBody = new StreamReader(req).ReadToEnd();
+            var data = JsonConvert.DeserializeObject<GuideExpense>(jsonBody);
+
+            var result = dbStore.UpdateGuide(EventId, data);
+            return (result) ? "updated successfully" : "something went wrong";
+        }
+        #endregion
+
+    }
 }

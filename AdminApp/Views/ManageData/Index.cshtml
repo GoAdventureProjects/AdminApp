@@ -151,7 +151,7 @@
                         <input id="inlineFormInputGroup" type="number" placeholder="Amount" class="mr-3 form-control" v-bind:value="expenseType.guide.amount" v-model="expenseType.guide.amount">
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-primary" v-on:click="crudMethods().updateGude()">Update</button>
                     </div>
                 </div>
             </div>
@@ -188,7 +188,7 @@
                 expenseType: {
                     stay: [],
                     transport: [],
-                    guide: []
+                    guide: {}
                 },
                 crud: {
                     stay: {
@@ -216,9 +216,10 @@
                     fetch("/ManageData/GetEventExpenses?eventDetailId=" + this.selectedEvent)
                         .then(result => result.json())
                         .then(jsondata => {
+                            debugger;
                             this.expenseType.stay = getDataByCategory(jsondata, "stay");
                             this.expenseType.transport = getTrasportData(jsondata);
-                            this.expenseType.guide = getDataByCategory(jsondata, "Guide");
+                            this.expenseType.guide = getGuideData(jsondata);
                         })
                 },
                 renderToggleBtns: function (id, value) {
@@ -271,6 +272,18 @@
                             })
                                 .then(response => response.text())
                                 .then(body => alert(body));
+                        },
+                        updateGude: function () {
+                            debugger;
+                            fetch("/ManageData/UpdateGuide?EventId=" + self.selectedEvent, {
+                                method: "POST",
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(self.expenseType.guide)
+                            })
+                                .then(response => response.text())
+                                .then(body => alert(body));
                         }
                     }
                 }
@@ -280,7 +293,6 @@
 
         //utils
         function getDataByCategory(data, type) {
-            debugger;
             var typeId = window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == type.toLowerCase())[0]["ExpensesTypeid"];
             return data.filter(x => x["ExpensesTypeid"] == typeId);
         }
@@ -310,6 +322,24 @@
             }
             return arr;
             //data.filter(ids.indexOf(x["ExpensesTypeid"] != -1)).map(x => new { slab: x["ExpensesTypeCode"],amount:x[""] })
+        }
+
+        function getGuideData(data) {
+            debugger;
+            var obj = {
+                expenseTypeId: getExpenseTypeId("guide"),
+                guide: "",
+                amount: 0,
+                paymentMode:"online"
+            }
+
+            var result = getDataByCategory(data, "guide");
+            if (result != null && result.length > 0) {
+                obj.name = result[0]["ExpenseTypeSource"];
+                obj.amount = result[0]["ExpenseAmount"];
+                obj.paymentMode = result[0]["ExpenseModeOfPayment"];
+            }
+            return obj;
         }
 
     })
