@@ -89,7 +89,7 @@ namespace AdminApp.Controllers
         {
             try
             {
-                var expenseObj = new EventExpensesEstimate
+                var expenseObj = new EventExpensesEstimateLookup
                 {
                     EventID = eventDetailId,
                     ExpensesTypeid = expenseTypeId,

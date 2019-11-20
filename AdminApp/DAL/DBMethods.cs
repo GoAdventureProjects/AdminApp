@@ -64,18 +64,18 @@ namespace AdminApp.DAL
             return null;
         }
 
-        public List<EventExpensesEstimate> GetEventExpenses(int eventDetailId)
+        public List<EventExpensesEstimateLookup> GetEventExpenses(int eventDetailId)
         {
             var result = DAL.GetEventExpenses(eventDetailId);
             if (result != null)
             {
-                var data = Utils.ConvertDataTable<EventExpensesEstimate>(result);
+                var data = Utils.ConvertDataTable<EventExpensesEstimateLookup>(result);
                 return data;
             }
             return null;
         }
 
-        public bool CreateNewStay(EventExpensesEstimate eventExpenses)
+        public bool CreateNewStay(EventExpensesEstimateLookup eventExpenses)
         {
             try
             {

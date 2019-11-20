@@ -5,9 +5,9 @@ using System.Web;
 
 namespace App.Models.Admin
 {
-    public class EventExpensesEstimate
+    public class EventExpensesEstimateLookup
     {
-        public int EventExpensesEstimateID { get; set; }
+        public int EventExpensesEstimateLookupID { get; set; }
         public int EventID { get; set; }
         public int ExpensesTypeid { get; set; }
         public string ExpenseTypeSource { get; set; }

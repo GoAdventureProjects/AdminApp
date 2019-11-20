@@ -51,7 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\EventDetails.cs" />
-    <Compile Include="Admin\EventExpensesEstimate.cs" />
+    <Compile Include="Admin\EventExpenseEstimate.cs" />
+    <Compile Include="Admin\EventExpensesEstimateLookup.cs" />
     <Compile Include="Admin\GuideExpense.cs" />
     <Compile Include="Admin\LuEventExpenseType.cs" />
     <Compile Include="Admin\LuEvents.cs" />

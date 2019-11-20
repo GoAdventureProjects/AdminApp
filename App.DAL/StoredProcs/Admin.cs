@@ -88,7 +88,7 @@ namespace App.DAL.StoredProcs
         {
             try
             {
-                var cmd = dbmanager.GetSqlCommand($"SELECT *FROM finance.EventExpensesEstimate where EventID={eventDetailId}");
+                var cmd = dbmanager.GetSqlCommand($"SELECT *FROM  finance.EventExpensesEstimateLookup where EventID={eventDetailId}");
                 cmd.CommandType = CommandType.Text;
 
                 var dt = dbmanager.GetDataTableResult(cmd);
@@ -102,11 +102,11 @@ namespace App.DAL.StoredProcs
 
         #region    create/update
 
-        public bool CreateStay(EventExpensesEstimate eventExpenses)
+        public bool CreateStay(EventExpensesEstimateLookup eventExpenses)
         {
             try
             {
-                var query = $"INSERT INTO finance.EventExpensesEstimate (EventID,ExpensesTypeid,ExpenseTypeSource,ExpenseAmount,Notes) VALUES " +
+                var query = $"INSERT INTO  finance.EventExpensesEstimateLookup (EventID,ExpensesTypeid,ExpenseTypeSource,ExpenseAmount,Notes) VALUES " +
                     $"(@EventId,@ExpenseTypeId,@StayName,@Amount,@paymentMode,@Notes)";
 
                 var cmd = dbmanager.GetSqlCommand(query);
@@ -130,7 +130,7 @@ namespace App.DAL.StoredProcs
         public bool UpdateTransport(int eventId, List<TransportSlab> transportSlabs)
         {
             var ids = string.Join<int>(",", transportSlabs.Select(x => x.ExpensesTypeid).ToList());
-            var selectQuery = $"select *from finance.EventExpensesEstimate where EventId=@EventId and ExpensesTypeid in ({ids})";
+            var selectQuery = $"select *from  finance.EventExpensesEstimateLookup where EventId=@EventId and ExpensesTypeid in ({ids})";
             var cmd = dbmanager.GetSqlCommand(selectQuery);
             try
             {
@@ -151,7 +151,7 @@ namespace App.DAL.StoredProcs
                     {
 
                         var ts = transportSlabs.Where(x => x.ExpensesTypeid == int.Parse(row["ExpensesTypeid"].ToString())).First();
-                        var updateQuery = $"update finance.EventExpensesEstimate  set ExpenseAmount={ts.Amount},ExpenseModeOfPayment='{ts.ModeOfPayment ?? "online"}', SlabRange ='{ts.Slab}' where EventID={eventId} and ExpensesTypeid={ts.ExpensesTypeid} ";
+                        var updateQuery = $"update  finance.EventExpensesEstimateLookup  set ExpenseAmount={ts.Amount},ExpenseModeOfPayment='{ts.ModeOfPayment ?? "online"}', SlabRange ='{ts.Slab}' where EventID={eventId} and ExpensesTypeid={ts.ExpensesTypeid} ";
                         cmd.CommandText = updateQuery;
                         dbmanager.ExecuteNonQuery(cmd);
                     }
@@ -161,7 +161,7 @@ namespace App.DAL.StoredProcs
                 {
                     cmd.Connection.Open();
 
-                    var insertQuery = $"insert into finance.EventExpensesEstimate " +
+                    var insertQuery = $"insert into  finance.EventExpensesEstimateLookup " +
                                                 $"(EventId,ExpensesTypeid,SlabRange,ExpenseAmount,ExpenseModeOfPayment,CreatedBy,CreatedDate) " +
                                                 $"values (@EventId,@ExpensesTypeid,@SlabRange,@ExpenseAmount,@ExpenseModeOfPayment,@CreatedBy,@CreatedDate)";
 
@@ -199,7 +199,7 @@ namespace App.DAL.StoredProcs
 
         public bool UpdateGuide(int eventId, GuideExpense guide)
         {
-            var selectQuery = $"select *from finance.EventExpensesEstimate where EventId=@EventId and ExpensesTypeid = {guide.ExpensesTypeid}";
+            var selectQuery = $"select *from  finance.EventExpensesEstimateLookup where EventId=@EventId and ExpensesTypeid = {guide.ExpensesTypeid}";
             var cmd = dbmanager.GetSqlCommand(selectQuery);
             try
             {
@@ -211,12 +211,12 @@ namespace App.DAL.StoredProcs
 
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    cmd.CommandText = $"update finance.EventExpensesEstimate  set ExpenseTypeSource='{guide.Name}', ExpenseAmount ={guide.Amount},ExpenseModeOfPayment='{guide.PaymentMode ?? "online"}' where EventID={eventId} and ExpensesTypeid={guide.ExpensesTypeid} ";
+                    cmd.CommandText = $"update  finance.EventExpensesEstimateLookup  set ExpenseTypeSource='{guide.Name}', ExpenseAmount ={guide.Amount},ExpenseModeOfPayment='{guide.PaymentMode ?? "online"}' where EventID={eventId} and ExpensesTypeid={guide.ExpensesTypeid} ";
                     dbmanager.ExecuteNonQuery(cmd);
                 }
                 else
                 {
-                    var insertQuery = $"insert into finance.EventExpensesEstimate " +
+                    var insertQuery = $"insert into  finance.EventExpensesEstimateLookup " +
                                                 $"(EventId,ExpensesTypeid,ExpenseTypeSource,ExpenseAmount,ExpenseModeOfPayment,CreatedBy,CreatedDate) " +
                                                 $"values (@EventId,@ExpensesTypeid,@GuideName,@ExpenseAmount,@ExpenseModeOfPayment,@CreatedBy,@CreatedDate)";
 

@@ -39,6 +39,9 @@
                                 <td>{{ row["ToDate"] | formatDate }}</td>
                                 <td>{{ row["AvailableSlots"] }}</td>
                                 <td>{{ row["BookedSlots"] }}</td>
+                                <td>
+                                    <a v-bind:href="'/ManageTrip/TripEstimation?Id='+row['Id']"> {{ (row["EstimatedAmount"])||"N/A" }} </a> 
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -67,7 +70,7 @@
             data: {
                 eventDetails: {
                     data: [],
-                    displayHeaders: ["EventTitle", "EventType", "City", "FromDate", "ToDate", "AvailableSlots", "BookedSlots"]
+                    displayHeaders: ["EventTitle", "EventType", "City", "FromDate", "ToDate", "AvailableSlots", "BookedSlots","EstimatedAmount"]
                 }
             },
             mounted: function () {

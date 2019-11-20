@@ -3,5 +3,275 @@
     ViewBag.Title = "TripEstimation";
 }
 
-<h2>TripEstimation</h2>
+
+<style type="text/css">
+
+    .card {
+        width: 100%;
+    }
+
+    #secSummary {
+        width: 100%;
+        margin-bottom: 20px;
+        padding-top: 10px;
+    }
+</style>
+
+@section page_header{
+    <div class="container-fluid">
+        <h2 class="no-margin-bottom">Trip Estimation</h2>
+    </div>
+}
+
+<div class="container-fluid" id="maindiv">
+
+    <!-- event summary -->
+    <section class="projects no-padding-top no-padding-bottom">
+        <div class="container-fluid">
+            <!-- Project-->
+            <div class="project">
+                <div class="row bg-white has-shadow">
+                    <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
+                        <div class="project-title d-flex align-items-center">
+                            <div class="image has-shadow"><img src="https://d19m59y37dris4.cloudfront.net/admin/1-4-5/img/project-1.jpg" alt="..." class="img-fluid"></div>
+                            <div class="text">
+                                <h3 class="h4">Megahalaya Trip</h3><small>Weekend</small>
+                            </div>
+                        </div>
+                        <div class="project-date"><span class="hidden-sm-down">Nov 23 to Nov 28</span></div>
+                    </div>
+                    <div class="right-col col-lg-6 d-flex align-items-center">
+                        <div class="project-date"><span class="hidden-sm-down">Sots Avilable <b>25</b> </span></div>
+                        <div class="project-date"><span class="hidden-sm-down">Sots Booked <b>21</b> </span></div>
+                        @*<div class="time"><i class="fa fa-clock-o"></i>Avilable Slots <b>25</b> </div>*@
+                        <div class="comments"><i class="fa fa-comment-o"></i>20</div>
+                        <div class="project-progress">
+                            <div class="progress">
+                                <div role="progressbar" style="width: 45%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- summary board -->
+    <div class="row">
+        <section id="secSummary" class="dashboard-counts no-padding-bottom">
+            <div class="container-fluid">
+                <div class="row bg-white has-shadow">
+                    <!-- Item -->
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="item d-flex align-items-center">
+                            <div class="icon bg-violet"><i class="icon-user"></i></div>
+                            <div class="title">
+                                <span>Total<br>Cost</span>
+                                <div class="progress">
+                                    <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                                </div>
+                            </div>
+                            <div class="number"><strong>25</strong></div>
+                        </div>
+                    </div>
+                    <!-- Item -->
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="item d-flex align-items-center">
+                            <div class="icon bg-red"><i class="icon-padnote"></i></div>
+                            <div class="title">
+                                <span>Online</span>
+                                <div class="progress">
+                                    <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
+                                </div>
+                            </div>
+                            <div class="number"><strong>70</strong></div>
+                        </div>
+                    </div>
+                    <!-- Item -->
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="item d-flex align-items-center">
+                            <div class="icon bg-green"><i class="icon-bill"></i></div>
+                            <div class="title">
+                                <span>Offline</span>
+                                <div class="progress">
+                                    <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
+                                </div>
+                            </div>
+                            <div class="number"><strong>40</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- select source for estimation-->
+    <div class="row">
+        <div id="divSourceSelection" class="card">
+            <div class="card-close">
+                <div class="dropdown">
+                    <button type="button" id="closeCard3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                    <div aria-labelledby="closeCard3" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                </div>
+            </div>
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Select sources</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- stay -->
+                    <div class="form-group col-md-3">
+                        <select name="account" class="form-control" v-on:change="updateReceipt()">
+                            <option v-for="(item,index) in expenseType.stay" v-bind:value="item.EventExpensesEstimateLookupID">{{ item.ExpenseTypeSource + " (&#8377; " + item.ExpenseAmount + ")" }} </option>
+                        </select>
+                    </div>
+
+                    <!-- transport -->
+                    <div class="form-group col-md-3">
+                        <select name="account" class="form-control"  v-on:change="updateReceipt()">
+                            <option v-for="(item,index) in expenseType.transport" v-bind:value="item.EventExpensesEstimateLookupID">{{ item.slab + " (&#8377; " + item.amount + ")" }} </option>
+                        </select>
+                    </div>
+                    <!-- guide -->
+                    <div class="form-group col-md-3">
+                        <input type="text" disabled="" v-bind:value="expenseType.guide.name +' (&#8377; '+ expenseType.guide.amount +' )'" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- final cost resipt-->
+    <div class="row">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Cost Receipt</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Payment Mode</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="var item in receipt">
+                                <td> {{ item.category }} </td>
+                                <td> {{ item.source}} </td>
+                                <td> {{ item.amount }} </td>
+                                <td> {{ item.paymentMode }} </td>
+                                <td> {{ item.cost }} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var vueapp = new Vue({
+            el: "#maindiv",
+            data: {
+                selectedEvent: "",
+                eventDetails: {
+                    originalData: [],
+                    eventTypes: [],
+                    currentEventData: []
+                },
+                expenseType: {
+                    stay: [],
+                    transport: [],
+                    guide: {}
+                },
+                receipt:[]
+            },
+            mounted: function () {
+                var id = location.search.split("=")[1]; //assuming 1 param only
+
+                fetch("/ManageData/GetEventExpenses?eventDetailId=" + id)
+                    .then(result => result.json())
+                    .then(jsondata => {
+                        debugger;
+                        this.expenseType.stay = getDataByCategory(jsondata, "stay");
+                        this.expenseType.transport = getTrasportData(jsondata);
+                        this.expenseType.guide = getGuideData(jsondata);
+                    })
+            },
+            methods: {
+                updateReceipt: function () {
+                    this.receipt = [];
+                    this.receipt.push({
+                        category: "stay",
+
+                    })
+                }
+            }
+        });
+    });
+
+    //utils
+    function getDataByCategory(data, type) {
+        var typeId = window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == type.toLowerCase())[0]["ExpensesTypeid"];
+        return data.filter(x => x["ExpensesTypeid"] == typeId);
+    }
+
+    function getExpenseTypeId(type) {
+        return window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == type)[0]["ExpensesTypeid"]
+    }
+
+    function getTrasportData(data) {
+        debugger;
+        var arr = [];
+        var ids = window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == "transport");
+        for (let i = 0; i < ids.length; i++) {
+            if (data.filter(x => x["ExpensesTypeid"] == ids[i]["ExpensesTypeid"]).length > 0) {
+                arr.push({
+                    EventExpensesEstimateLookupID: (data.filter(x => x["ExpensesTypeid"] == ids[i]["ExpensesTypeid"]))[0]["EventExpensesEstimateLookupID"],
+                    ExpensesTypeid: ids[i]["ExpensesTypeid"],
+                    slab: ids[i]["ExpenseTypeCode"],
+                    amount: (data.filter(x => x["ExpensesTypeid"] == ids[i]["ExpensesTypeid"]))[0]["ExpenseAmount"]
+                })
+            }
+            //else {
+            //    arr.push({
+            //        ExpensesTypeid: ids[i]["ExpensesTypeid"],
+            //        slab: ids[i]["ExpenseTypeCode"],
+            //        amount: 0
+            //    })
+            //}
+        }
+        return arr;
+        //data.filter(ids.indexOf(x["ExpensesTypeid"] != -1)).map(x => new { slab: x["ExpensesTypeCode"],amount:x[""] })
+    }
+
+    function getGuideData(data) {
+        var obj = {
+            expenseTypeId: getExpenseTypeId("guide"),
+            guide: "",
+            amount: 0,
+            paymentMode: "online"
+        }
+
+        var result = getDataByCategory(data, "guide");
+        if (result != null && result.length > 0) {
+            obj.name = result[0]["ExpenseTypeSource"];
+            obj.amount = result[0]["ExpenseAmount"];
+            obj.paymentMode = result[0]["ExpenseModeOfPayment"];
+        }
+        return obj;
+    }
+
+</script>
 

@@ -7,7 +7,7 @@ namespace App.Models.Admin
 {
     public class EventDetails
     {
-        public int EventId { get; set; }
+        public int Id { get; set; }
         public int EventDetailsId { get; set; }
         public string EventTitle { get; set; }
         public string EventType { get; set; }
