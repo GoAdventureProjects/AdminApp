@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace App.Models.Admin
 {
-   public class EventExpenseEstimate
+    public class EventExpenseEstimate
     {
 
-        private class Stay
-        {
-            public int EventExpensesEstimateLookupID { get; set; }
+        public int EventExpensesEstimateLookupID { get; set; }
+        public int EventDatesID { get; set; }
+        public string Notes { get; set; }
+        public bool IsActive { get; set; }
 
-        }
     }
 
-   
+
 }

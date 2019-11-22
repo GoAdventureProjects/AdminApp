@@ -84,7 +84,7 @@ namespace App.DAL.StoredProcs
             }
         }
 
-        public DataTable GetEventExpenses(int eventDetailId)
+        public DataTable GetEventExpensesLookup(int eventDetailId)
         {
             try
             {

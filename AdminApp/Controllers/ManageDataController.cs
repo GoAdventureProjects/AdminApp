@@ -63,11 +63,11 @@ namespace AdminApp.Controllers
         }
 
 
-        public string GetEventExpenses(int eventDetailId)
+        public string GetEventExpensesLookup(int eventDetailId)
         {
             try
             {
-                var result = dbStore.GetEventExpenses(eventDetailId);
+                var result = dbStore.GetEventExpensesLookup(eventDetailId);
                 if (result != null)
                     return JsonConvert.SerializeObject(result);
             }

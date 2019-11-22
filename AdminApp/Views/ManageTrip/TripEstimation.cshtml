@@ -24,7 +24,6 @@
 }
 
 <div class="container-fluid" id="maindiv">
-
     <!-- event summary -->
     <section class="projects no-padding-top no-padding-bottom">
         <div class="container-fluid">
@@ -121,24 +120,28 @@
                 <div class="row">
                     <!-- stay -->
                     <div class="form-group col-md-3">
-                        <select name="account" class="form-control" v-on:change="updateReceipt()">
+                        <select name="account" class="form-control" v-on:change="updateReceipt('stay')" v-model="selection.stay">
+                            <option value="0">Select Stay</option>
                             <option v-for="(item,index) in expenseType.stay" v-bind:value="item.EventExpensesEstimateLookupID">{{ item.ExpenseTypeSource + " (&#8377; " + item.ExpenseAmount + ")" }} </option>
                         </select>
                     </div>
 
                     <!-- transport -->
                     <div class="form-group col-md-3">
-                        <select name="account" class="form-control"  v-on:change="updateReceipt()">
+                        <select name="account" class="form-control" v-on:change="updateReceipt('transport')" v-model="selection.transport">
+                            <option value="0">Select Transport</option>
                             <option v-for="(item,index) in expenseType.transport" v-bind:value="item.EventExpensesEstimateLookupID">{{ item.slab + " (&#8377; " + item.amount + ")" }} </option>
                         </select>
                     </div>
                     <!-- guide -->
                     <div class="form-group col-md-3">
                         <input type="text" disabled="" v-bind:value="expenseType.guide.name +' (&#8377; '+ expenseType.guide.amount +' )'" class="form-control">
+                        <input type="text" style="display:none" v-model="selection.guide" />
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 
@@ -146,7 +149,8 @@
     <div class="row">
         <div class="card">
             <div class="card-header d-flex align-items-center">
-                <h3 class="h4">Cost Receipt</h3>
+                <h3 class="h4">Cost Receipt </h3>
+                <h6 style="margin-left:10px"> Total Amount :{{ "&#8377; "+ getTotalReciptAmount()  }} </h6>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -157,19 +161,20 @@
                                 <th>Name</th>
                                 <th>Amount</th>
                                 <th>Payment Mode</th>
-                                <th>Cost</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="var item in receipt">
+                            <tr v-for="item in receipt">
                                 <td> {{ item.category }} </td>
                                 <td> {{ item.source}} </td>
                                 <td> {{ item.amount }} </td>
                                 <td> {{ item.paymentMode }} </td>
-                                <td> {{ item.cost }} </td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="row">
+                    <input type="button" class="btn btn-primary" value="Save this receipt" v-on:click="updateReceipToDB()" />
                 </div>
             </div>
         </div>
@@ -185,36 +190,74 @@
             el: "#maindiv",
             data: {
                 selectedEvent: "",
-                eventDetails: {
-                    originalData: [],
-                    eventTypes: [],
-                    currentEventData: []
+                eventData: [],
+                selection: {
+                    stay: 0,
+                    transport: 0,
+                    guide: 0
                 },
                 expenseType: {
                     stay: [],
                     transport: [],
                     guide: {}
                 },
-                receipt:[]
+                receipt: []
             },
             mounted: function () {
                 var id = location.search.split("=")[1]; //assuming 1 param only
 
-                fetch("/ManageData/GetEventExpenses?eventDetailId=" + id)
+                fetch("/ManageData/GetEventExpensesLookup?eventDetailId=" + id)
                     .then(result => result.json())
                     .then(jsondata => {
                         debugger;
+                        this.eventData = jsondata.slice();
                         this.expenseType.stay = getDataByCategory(jsondata, "stay");
                         this.expenseType.transport = getTrasportData(jsondata);
                         this.expenseType.guide = getGuideData(jsondata);
+                        this.selection.guide = this.expenseType.guide["EventExpensesEstimateLookupID"]
                     })
             },
             methods: {
                 updateReceipt: function () {
+                    debugger;
                     this.receipt = [];
-                    this.receipt.push({
-                        category: "stay",
+                    var temp1 = this.selection.stay;
+                    var temp2 = this.eventData;
+                    this.updateSourceDataInReceipt("stay")
+                    this.updateSourceDataInReceipt("transport")
+                    this.updateSourceDataInReceipt("guide")
+                },
+                updateSourceDataInReceipt: function (type) {
+                    debugger;
+                    var obj = {};
+                    if (type == "stay")
+                        obj = this.eventData.filter(x => x["EventExpensesEstimateLookupID"] == this.selection.stay)[0];
+                    else if (type == "transport")
+                        obj = this.eventData.filter(x => x["EventExpensesEstimateLookupID"] == this.selection.transport)[0];
+                    else if (type = "guide")
+                        obj = this.eventData.filter(x => x["EventExpensesEstimateLookupID"] == this.selection.guide)[0];
 
+                    if (obj) {
+                        this.receipt.push({
+                            category: type,
+                            source: (type == "transport") ? obj["SlabRange"] : obj["ExpenseTypeSource"],
+                            amount: obj["ExpenseAmount"],
+                            paymentMode: obj["ExpenseModeOfPayment"],
+                            eventExpensesEstimateLookupID: obj["EventExpensesEstimateLookupID"],
+                        })
+                    }
+
+                },
+                getTotalReciptAmount: function () {
+                    return this.receipt.reduce((acc, a) => { return acc + a.amount }, 0);
+                },
+                updateReceipToDB: function () {
+                    fetch("UpdateTripEstimation?EventDatesId=" + location.search.split("=")[1], {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(this.receipt)
                     })
                 }
             }
@@ -232,7 +275,6 @@
     }
 
     function getTrasportData(data) {
-        debugger;
         var arr = [];
         var ids = window._EventExpenseType.filter(x => x["ExpensesType"].toLowerCase() == "transport");
         for (let i = 0; i < ids.length; i++) {
@@ -258,10 +300,10 @@
 
     function getGuideData(data) {
         var obj = {
-            expenseTypeId: getExpenseTypeId("guide"),
-            guide: "",
-            amount: 0,
-            paymentMode: "online"
+            //expenseTypeId: getExpenseTypeId("guide"),
+            //guide: "",
+            //amount: 0,
+            //paymentMode: "online"
         }
 
         var result = getDataByCategory(data, "guide");
@@ -269,9 +311,11 @@
             obj.name = result[0]["ExpenseTypeSource"];
             obj.amount = result[0]["ExpenseAmount"];
             obj.paymentMode = result[0]["ExpenseModeOfPayment"];
+            obj.EventExpensesEstimateLookupID = result[0]["EventExpensesEstimateLookupID"];
         }
         return obj;
     }
+
 
 </script>
 

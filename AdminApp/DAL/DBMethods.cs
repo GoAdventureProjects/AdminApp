@@ -64,9 +64,9 @@ namespace AdminApp.DAL
             return null;
         }
 
-        public List<EventExpensesEstimateLookup> GetEventExpenses(int eventDetailId)
+        public List<EventExpensesEstimateLookup> GetEventExpensesLookup(int eventDetailId)
         {
-            var result = DAL.GetEventExpenses(eventDetailId);
+            var result = DAL.GetEventExpensesLookup(eventDetailId);
             if (result != null)
             {
                 var data = Utils.ConvertDataTable<EventExpensesEstimateLookup>(result);
