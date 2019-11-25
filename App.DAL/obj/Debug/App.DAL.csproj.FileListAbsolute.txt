@@ -1,12 +1,3 @@
-F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\App.DAL.dll
-F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\App.DAL.pdb
-F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.dll
-F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.pdb
-F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csprojAssemblyReference.cache
-F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CoreCompileInputs.cache
-F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CopyComplete
-F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.dll
-F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.pdb
 E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\App.DAL.dll
 E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\App.DAL.pdb
 E:\Rajashekar\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.dll
@@ -29,3 +20,15 @@ D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CoreCompil
 D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CopyComplete
 D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.dll
 D:\Rajashekar.T\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.pdb
+F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\App.DAL.dll
+F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\App.DAL.pdb
+F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.dll
+F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\Newtonsoft.Json.dll
+F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.pdb
+F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\App.Models.dll.config
+F:\My Projects\GoAdventure\AdminApp\App.DAL\bin\Debug\Newtonsoft.Json.xml
+F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csprojAssemblyReference.cache
+F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CoreCompileInputs.cache
+F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.csproj.CopyComplete
+F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.dll
+F:\My Projects\GoAdventure\AdminApp\App.DAL\obj\Debug\App.DAL.pdb

@@ -32,6 +32,11 @@ namespace AdminApp.Controllers
             return View();
         }
 
+		public ActionResult Transactions()
+		{
+			return View();
+		}
+
         [HttpPost]
         public string UpdateTripEstimation(int EventDatesId)
         {

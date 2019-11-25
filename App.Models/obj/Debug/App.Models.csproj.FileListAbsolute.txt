@@ -1,9 +1,3 @@
-F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll
-F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.pdb
-F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojAssemblyReference.cache
-F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreCompileInputs.cache
-F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
-F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb
 E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreCompileInputs.cache
 E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
 E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb
@@ -26,3 +20,17 @@ D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.Core
 D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CopyComplete
 D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
 D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll.config
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.pdb
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.dll
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.SqlServer.dll
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.dll
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.xml
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.SqlServer.xml
+F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.xml
+F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojAssemblyReference.cache
+F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreCompileInputs.cache
+F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CopyComplete
+F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
+F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb

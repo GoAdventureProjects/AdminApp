@@ -534,10 +534,12 @@
     <Content Include="Views\ManageData\_Stay.cshtml" />
     <Content Include="Views\ManageData\_Trasportation.cshtml" />
     <Content Include="Views\ManageData\dummy.cshtml" />
+    <Content Include="Views\ManageTrip\Transactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Transactions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

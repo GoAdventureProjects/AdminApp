@@ -30,7 +30,7 @@
             <!-- Project-->
             <div class="project">
                 <div class="row bg-white has-shadow">
-                    <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center justify-content-between">
                         <div class="project-title d-flex align-items-center">
                             <div class="image has-shadow"><img src="https://d19m59y37dris4.cloudfront.net/admin/1-4-5/img/project-1.jpg" alt="..." class="img-fluid"></div>
                             <div class="text">
@@ -221,8 +221,6 @@
                 updateReceipt: function () {
                     debugger;
                     this.receipt = [];
-                    var temp1 = this.selection.stay;
-                    var temp2 = this.eventData;
                     this.updateSourceDataInReceipt("stay")
                     this.updateSourceDataInReceipt("transport")
                     this.updateSourceDataInReceipt("guide")

@@ -252,8 +252,8 @@ namespace App.DAL.StoredProcs
 					cmd.CommandText = query;
 					cmd.Parameters.AddWithValue("@eventDatesID", eventDatesId);
 					cmd.Parameters.AddWithValue("@eventExpensesEstimateLookupID", item.EventExpensesEstimateLookupID);
-					cmd.Parameters.AddWithValue("@notes", item.Notes);
-					cmd.Parameters.AddWithValue("@isActive", item.IsActive);
+					cmd.Parameters.AddWithValue("notes", string.IsNullOrEmpty(item.Notes) ? "" : item.Notes);
+					cmd.Parameters.AddWithValue("@isActive", true);
 					cmd.Parameters.AddWithValue("@createdBy", "Admin");
 					cmd.Parameters.AddWithValue("@createdDate", DateTime.Now);
 					cmd.ExecuteNonQuery();

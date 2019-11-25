@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Transactions";
+}
+
+<style type="text/css">
+
+    .card {
+        width: 100%;
+    }
+</style>
+
+
+@section page_header{
+    <div class="container-fluid">
+        <h2 class="no-margin-bottom">Transactions</h2>
+    </div>
+}
+
+    <div class="container-fluid" id="maindiv">
+        <div class="container-fluid" id="maindiv">
+            <div class="row">
+
+                <!-- UpComming Events -->
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">UpComming Events</h3>
+                    </div>
+                    <div class="card-body" style="max-height:450px;overflow-y:scroll">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var mainapp = new Vue({
+            el: "#maindiv",
+            data: {},
+            mounted:function() {
+                var id = location.search.split("=")[1]; //assuming 1 param only
+
+                fetch("GetEventTransactions?eventDetailId=" + id)
+                    .then(result => result.json())
+                    .then(jsondata => {
+                        debugger;
+                        this.eventData = jsondata.slice();
+                        this.expenseType.stay = getDataByCategory(jsondata, "stay");
+                        this.expenseType.transport = getTrasportData(jsondata);
+                        this.expenseType.guide = getGuideData(jsondata);
+                        this.selection.guide = this.expenseType.guide["EventExpensesEstimateLookupID"]
+                    })
+            },
+            methods: {}
+        })
+    });
+
+</script>
