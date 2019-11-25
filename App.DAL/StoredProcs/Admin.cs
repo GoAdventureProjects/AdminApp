@@ -247,7 +247,8 @@ namespace App.DAL.StoredProcs
 				cmd.Connection.Open();
 				foreach (var item in eventExpenses)
 				{
-					var query = $"insert into Finance.EventExpensesEstimate (EventDatesID,EventExpensesEstimateLookupID,Notes,IsActive,CreatedBy,CreatedDate) values (@eventDatesID, @eventExpensesEstimateLookupID, @notes, @isActive, @createdBy, @createdDate)";
+					var query = $"insert into Finance.EventExpensesEstimate (EventDatesID,EventExpensesEstimateLookupID,Notes,IsActive,CreatedBy,CreatedDate) " +
+						$"values (@eventDatesID, @eventExpensesEstimateLookupID, @notes, @isActive, @createdBy, @createdDate)";
 					cmd.CommandText = query;
 					cmd.Parameters.AddWithValue("@eventDatesID", eventDatesId);
 					cmd.Parameters.AddWithValue("@eventExpensesEstimateLookupID", item.EventExpensesEstimateLookupID);
