@@ -111,5 +111,17 @@ namespace AdminApp.DAL
                 throw ex;
             }
         }
-    }
+
+		public bool SaveEventExpenses(int eventDatesId,List<EventExpenseEstimate> eventExpenses)
+		{
+			try
+			{
+				return DAL.UpdateReceipt(eventDatesId,eventExpenses);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+	}
 }

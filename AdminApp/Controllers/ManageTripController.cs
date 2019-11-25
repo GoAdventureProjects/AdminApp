@@ -6,13 +6,23 @@ using System.Web.Mvc;
 using System.IO;
 using Newtonsoft.Json;
 using App.Models.Admin;
+using AdminApp.DAL;
 
 namespace AdminApp.Controllers
 {
     public class ManageTripController : Controller
     {
-        // GET: ManageTrip
-        public ActionResult Index()
+		private DBMethods dbStore;
+
+
+		public ManageTripController()
+		{
+			dbStore = new DBMethods();
+		}
+
+
+		// GET: ManageTrip
+		public ActionResult Index()
         {
             return View();
         }
@@ -30,7 +40,8 @@ namespace AdminApp.Controllers
             var jsonData = new StreamReader(reqs).ReadToEnd();
 
             var data = JsonConvert.DeserializeObject<List<EventExpenseEstimate>>(jsonData);
-
+			//data.ForEach(x => x.EventDatesID = EventDatesId);
+			dbStore.SaveEventExpenses(EventDatesId, data);
             return "";
         }
     }

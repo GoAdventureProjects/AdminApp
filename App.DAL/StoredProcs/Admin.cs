@@ -238,6 +238,38 @@ namespace App.DAL.StoredProcs
             }
         }
 
+
+		public bool UpdateReceipt(int eventDatesId,List<EventExpenseEstimate> eventExpenses)
+		{
+			var cmd = dbmanager.GetSqlCommand();
+			try
+			{
+				cmd.Connection.Open();
+				foreach (var item in eventExpenses)
+				{
+					var query = $"insert into Finance.EventExpensesEstimate (EventDatesID,EventExpensesEstimateLookupID,Notes,IsActive,CreatedBy,CreatedDate) values (@eventDatesID, @eventExpensesEstimateLookupID, @notes, @isActive, @createdBy, @createdDate)";
+					cmd.CommandText = query;
+					cmd.Parameters.AddWithValue("@eventDatesID", eventDatesId);
+					cmd.Parameters.AddWithValue("@eventExpensesEstimateLookupID", item.EventExpensesEstimateLookupID);
+					cmd.Parameters.AddWithValue("@notes", item.Notes);
+					cmd.Parameters.AddWithValue("@isActive", item.IsActive);
+					cmd.Parameters.AddWithValue("@createdBy", "Admin");
+					cmd.Parameters.AddWithValue("@createdDate", DateTime.Now);
+					cmd.ExecuteNonQuery();
+					cmd.Parameters.Clear();
+				}
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				cmd.Connection.Close();
+			}
+		}
+
         #endregion
     }
 }

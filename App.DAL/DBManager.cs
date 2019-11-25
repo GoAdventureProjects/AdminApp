@@ -24,7 +24,14 @@ namespace App.DAL
             return new SqlCommand(sqlCommand, con);
         }
 
-        public void AddParameter(SqlCommand cmd,string parameterName,SqlDbType sqlDbType)
+		public SqlCommand GetSqlCommand()
+		{
+			var cmd= new SqlCommand();
+			cmd.Connection = new SqlConnection(ConnectionString);
+			return cmd;
+		}
+
+		public void AddParameter(SqlCommand cmd,string parameterName,SqlDbType sqlDbType)
         {
             cmd.Parameters.Add(parameterName, sqlDbType);
         }
