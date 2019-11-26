@@ -17,25 +17,60 @@
     </div>
 }
 
-    <div class="container-fluid" id="maindiv">
         <div class="container-fluid" id="maindiv">
             <div class="row">
 
-                <!-- UpComming Events -->
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
-                        <h3 class="h4">UpComming Events</h3>
+                        <h3 class="h4">Transaction History</h3>
                     </div>
                     <div class="card-body" style="max-height:450px;overflow-y:scroll">
+
+                        <!-- add new transaction-->
+                        <div class="row">
+                            <div class="form-group col-md-2">
+                                <label>Amount</label>
+                                <input id="txtAmount" type="number" placeholder="Amount" class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Date</label>
+                                <input id="txtDateTime" type="date"  class="form-control">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Transaction ID</label>
+                                <input id="txtTransactionId" type="text" placeholder="transaction id" class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Notes</label>
+                                <input id="txtStayNotes" type="text" placeholder="additional information" class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="button" class="btn btn-primary" value="Save" v-on:click="saveTransaction()"/>
+                            </div>
+                        </div>
+
+
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        
+                                        <th>Date</th>
+                                        <th>Transferred</th>
+                                        <th>Balance</th>
+                                        <th>Recepient</th>
+                                        <th>TransacrionId</th>
+                                        <th>Notes</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <tr v-for="item in transactionsHistory">
+                                        <td> {{ item.TransactionDate }} </td>
+                                        <td> {{ item.TransferedAmount }} </td>
+                                        <td> {{ item.BalanceAmount }} </td>
+                                        <td> {{ item.Recepient }} </td>
+                                        <td> {{ item.TransactionID }} </td>
+                                        <td> {{ item.notes }} </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -45,7 +80,6 @@
             </div>
         </div>
 
-    </div>
 
 <script type="text/javascript">
 
@@ -53,22 +87,44 @@
 
         var mainapp = new Vue({
             el: "#maindiv",
-            data: {},
-            mounted:function() {
+            data: {
+                eventDatesId:0,
+                ct: {
+                    amount: 0,
+                    date: new Date(),
+                    transactionId: "",
+                    notes: ""
+                },
+                transactionsHistory:[]
+            },
+            mounted: function () {
+                debugger;
                 var id = location.search.split("=")[1]; //assuming 1 param only
-
-                fetch("GetEventTransactions?eventDetailId=" + id)
-                    .then(result => result.json())
+                this.eventDatesId = id;
+                fetch("GetEventTransactions?eventDatesId=" + id)
+                    .then(result => {
+                        debugger;
+                        return result.json();
+                    })
                     .then(jsondata => {
                         debugger;
-                        this.eventData = jsondata.slice();
-                        this.expenseType.stay = getDataByCategory(jsondata, "stay");
-                        this.expenseType.transport = getTrasportData(jsondata);
-                        this.expenseType.guide = getGuideData(jsondata);
-                        this.selection.guide = this.expenseType.guide["EventExpensesEstimateLookupID"]
+                        this.transactionsHistory = jsondata;
                     })
             },
-            methods: {}
+            methods: {
+                saveTransaction: function () {
+                    var param = {
+
+                    };
+                    fetch("SaveTransaction?eventDatesId=" + this.eventDatesId, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(param)
+                    })
+                }
+            }
         })
     });
 

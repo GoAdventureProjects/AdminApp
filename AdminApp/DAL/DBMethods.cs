@@ -123,5 +123,23 @@ namespace AdminApp.DAL
 				throw ex;
 			}
 		}
-	}
+
+        public List<EventTransactions> GetEventTransactions(int eventDatesId)
+        {
+            try
+            {
+                var dt= DAL.GetEventTransactions(eventDatesId);
+                if (dt != null)
+                {
+                    return Utils.ConvertDataTable<EventTransactions>(dt);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+    }
 }

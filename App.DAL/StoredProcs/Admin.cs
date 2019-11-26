@@ -271,6 +271,22 @@ namespace App.DAL.StoredProcs
 			}
 		}
 
+
+        public DataTable GetEventTransactions(int eventdatesId)
+        {
+            try
+            {
+                var query = $"select *from finance.ExpensesTransaction where EventDatesID={eventdatesId}";
+                var cmd = dbmanager.GetSqlCommand(query);
+                var dt = dbmanager.GetDataTableResult(cmd);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
     }
 }

@@ -24,6 +24,11 @@
 }
 
 <div class="container-fluid" id="maindiv">
+
+    <div class="row">
+        <input  type="button" class="btn btn-primary" value="Transaction History" v-on:click="navigateToTransactions()"/>
+    </div>
+
     <!-- event summary -->
     <section class="projects no-padding-top no-padding-bottom">
         <div class="container-fluid">
@@ -257,6 +262,9 @@
                         },
                         body: JSON.stringify(this.receipt)
                     })
+                },
+                navigateToTransactions: function () {
+                    window.location.href = '/ManageTrip/Transactions?Id=' + location.search.split("=")[1];
                 }
             }
         });

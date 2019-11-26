@@ -49,5 +49,11 @@ namespace AdminApp.Controllers
 			dbStore.SaveEventExpenses(EventDatesId, data);
             return "";
         }
+
+        public string GetEventTransactions(int eventDatesId)
+        {
+            var result = dbStore.GetEventTransactions(eventDatesId);
+            return (result == null) ? JsonConvert.SerializeObject(result) : "";
+        }
     }
 }
