@@ -81,6 +81,7 @@
                     fetch("/home/GetEventDetails")
                         .then(response => response.json())
                         .then(jsondata => {
+                            debugger;
                             this.eventDetails.data = jsondata;
                         });
                 }

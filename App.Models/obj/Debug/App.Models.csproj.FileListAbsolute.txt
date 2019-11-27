@@ -6,20 +6,6 @@ E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.pdb
 E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.dll
 E:\Rajashekar\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.xml
 E:\Rajashekar\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojResolveAssemblyReference.cache
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll.config
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.pdb
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.dll
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.SqlServer.dll
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.dll
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.xml
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.SqlServer.xml
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.xml
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojAssemblyReference.cache
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreCompileInputs.cache
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CopyComplete
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
-D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb
 F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll.config
 F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll
 F:\My Projects\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.pdb
@@ -34,3 +20,17 @@ F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreC
 F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CopyComplete
 F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
 F:\My Projects\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll.config
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\App.Models.pdb
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.SqlServer.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.xml
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\EntityFramework.SqlServer.xml
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\bin\Debug\Newtonsoft.Json.xml
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csprojAssemblyReference.cache
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CoreCompileInputs.cache
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.csproj.CopyComplete
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.dll
+D:\Rajashekar.T\GoAdventure\AdminApp\App.Models\obj\Debug\App.Models.pdb

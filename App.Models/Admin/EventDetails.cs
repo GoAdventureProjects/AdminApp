@@ -16,6 +16,7 @@ namespace App.Models.Admin
         public DateTime? ToDate { get; set; }
         public int? AvailableSlots { get; set; }
         public int? BookedSlots { get; set; }
+        public double EstimatedAmount { get; set; }
 
     }
 }

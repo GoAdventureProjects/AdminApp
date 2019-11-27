@@ -17,68 +17,119 @@
     </div>
 }
 
-        <div class="container-fluid" id="maindiv">
-            <div class="row">
+    <div class="container-fluid" id="maindiv">
 
-                <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                        <h3 class="h4">Transaction History</h3>
+        <!-- final cost resipt-->
+        <div class="row">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h3 class="h4">Cost Receipt </h3>
+                    <h6 style="margin-left:10px"> Total Amount :{{ "&#8377; "+ getTotalReciptAmount()  }} </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Name</th>
+                                    <th>Amount</th>
+                                    <th>Payment Mode</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in receipt">
+                                    <td> {{ item.category }} </td>
+                                    <td> {{ item.source}} </td>
+                                    <td> {{ item.amount }} </td>
+                                    <td> {{ item.paymentMode }} </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="card-body" style="max-height:450px;overflow-y:scroll">
-
-                        <!-- add new transaction-->
-                        <div class="row">
-                            <div class="form-group col-md-2">
-                                <label>Amount</label>
-                                <input id="txtAmount" type="number" placeholder="Amount" class="form-control">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Date</label>
-                                <input id="txtDateTime" type="date"  class="form-control">
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label>Transaction ID</label>
-                                <input id="txtTransactionId" type="text" placeholder="transaction id" class="form-control">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Notes</label>
-                                <input id="txtStayNotes" type="text" placeholder="additional information" class="form-control">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <input type="button" class="btn btn-primary" value="Save" v-on:click="saveTransaction()"/>
-                            </div>
-                        </div>
-
-
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Transferred</th>
-                                        <th>Balance</th>
-                                        <th>Recepient</th>
-                                        <th>TransacrionId</th>
-                                        <th>Notes</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in transactionsHistory">
-                                        <td> {{ item.TransactionDate }} </td>
-                                        <td> {{ item.TransferedAmount }} </td>
-                                        <td> {{ item.BalanceAmount }} </td>
-                                        <td> {{ item.Recepient }} </td>
-                                        <td> {{ item.TransactionID }} </td>
-                                        <td> {{ item.notes }} </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="row">
+                        <input type="button" class="btn btn-primary" value="Save this receipt" v-on:click="updateReceipToDB()" />
                     </div>
                 </div>
-
             </div>
         </div>
+
+        <!-- add new transaction-->
+        <div class="row">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h3 class="h4">Add New Transaction</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label>Amount</label>
+                            <input type="number" placeholder="Amount" class="form-control" v-model="newTransaction.amount">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Date</label>
+                            <input type="date" class="form-control" v-model="newTransaction.date">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label> Recepient </label>
+                            <select class="form-control" v-model="newTransaction.recepient">
+                                <option>Select Recepient</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Transaction ID</label>
+                            <input id="txtTransactionId" type="text" placeholder="transaction id" class="form-control" v-model="newTransaction.transactionId">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Notes</label>
+                            <input type="text" placeholder="additional information" class="form-control" v-model="newTransaction.notes">
+                        </div>
+                        <div class="form-group col-md-3" style="padding-top:25px">
+                            <input type="button" class="btn btn-primary" value="Save" v-on:click="saveTransaction()" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h3 class="h4">Transaction History</h3>
+                </div>
+                <div class="card-body" style="max-height:450px;overflow-y:auto">
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Transferred</th>
+                                    <th>Balance</th>
+                                    <th>Recepient</th>
+                                    <th>TransacrionId</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in transactionsHistory">
+                                    <td> {{ item.TransactionDate }} </td>
+                                    <td> {{ item.TransferedAmount }} </td>
+                                    <td> {{ item.BalanceAmount }} </td>
+                                    <td> {{ item.Recepient }} </td>
+                                    <td> {{ item.TransactionID }} </td>
+                                    <td> {{ item.notes }} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
 <script type="text/javascript">
@@ -88,17 +139,19 @@
         var mainapp = new Vue({
             el: "#maindiv",
             data: {
+                receipt:[],
                 eventDatesId:0,
-                ct: {
+                newTransaction: {
                     amount: 0,
                     date: new Date(),
+                    recepient:"",
                     transactionId: "",
-                    notes: ""
+                    notes: "",
+                    balanceAmount:0
                 },
                 transactionsHistory:[]
             },
             mounted: function () {
-                debugger;
                 var id = location.search.split("=")[1]; //assuming 1 param only
                 this.eventDatesId = id;
                 fetch("GetEventTransactions?eventDatesId=" + id)
@@ -112,7 +165,13 @@
                     })
             },
             methods: {
+                getTotalReciptAmount: function () {
+                    return this.receipt.reduce((acc, a) => { return acc + a.amount }, 0);
+                },
                 saveTransaction: function () {
+                    debugger;
+                    console.log(this.newTransaction);
+
                     var param = {
 
                     };
