@@ -213,10 +213,9 @@
                     this.eventDetails.currentEventData = this.eventDetails.originalData.filter(x => x.EventType == eventType);
                 },
                 onEventChange: function () {
-                    fetch("/ManageData/GetEventExpenses?eventDetailId=" + this.selectedEvent)
+                    fetch("/ManageData/GetEventExpensesLookup?eventDetailId=" + this.selectedEvent)
                         .then(result => result.json())
                         .then(jsondata => {
-                            debugger;
                             this.expenseType.stay = getDataByCategory(jsondata, "stay");
                             this.expenseType.transport = getTrasportData(jsondata);
                             this.expenseType.guide = getGuideData(jsondata);
@@ -274,7 +273,6 @@
                                 .then(body => alert(body));
                         },
                         updateGude: function () {
-                            debugger;
                             fetch("/ManageData/UpdateGuide?EventId=" + self.selectedEvent, {
                                 method: "POST",
                                 headers: {
@@ -325,7 +323,6 @@
         }
 
         function getGuideData(data) {
-            debugger;
             var obj = {
                 expenseTypeId: getExpenseTypeId("guide"),
                 guide: "",

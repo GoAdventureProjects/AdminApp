@@ -58,6 +58,7 @@
     <Compile Include="Admin\LuEventExpenseType.cs" />
     <Compile Include="Admin\LuEvents.cs" />
     <Compile Include="Admin\LuEventType.cs" />
+    <Compile Include="Admin\Recepient.cs" />
     <Compile Include="Admin\TransportSlab.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -287,6 +287,21 @@ namespace App.DAL.StoredProcs
             }
         }
 
+        public DataTable GetRecepients()
+        {
+            try
+            {
+                var query = $"select *from finance.ExpenseRecipient";
+                var cmd = dbmanager.GetSqlCommand(query);
+                var dt = dbmanager.GetDataTableResult(cmd);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
     }
 }

@@ -141,5 +141,22 @@ namespace AdminApp.DAL
             }
         }
 
+        public List<Recepient> GetRecepients()
+        {
+            try
+            {
+                var dt = DAL.GetRecepients();
+                if (dt != null)
+                {
+                    return Utils.ConvertDataTable<Recepient>(dt);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

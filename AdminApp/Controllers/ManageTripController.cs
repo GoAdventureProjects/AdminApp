@@ -55,5 +55,11 @@ namespace AdminApp.Controllers
             var result = dbStore.GetEventTransactions(eventDatesId);
             return (result == null) ? JsonConvert.SerializeObject(result) : "";
         }
+
+        public string GetRecepientsList()
+        {
+            var result = dbStore.GetRecepients();
+            return (result == null)  ?"": JsonConvert.SerializeObject(result);
+        }
     }
 }
