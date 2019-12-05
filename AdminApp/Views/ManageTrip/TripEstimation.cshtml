@@ -23,169 +23,234 @@
     </div>
 }
 
-<div class="container-fluid" id="maindiv">
+    <div class="container-fluid" id="maindiv">
 
-    <div class="row">
-        <input  type="button" class="btn btn-primary" value="Transaction History" v-on:click="navigateToTransactions()"/>
-    </div>
+        @*<div class="row">
+            <input type="button" class="btn btn-primary" value="Transaction History" v-on:click="navigateToTransactions()" />
+        </div>*@
 
-    <!-- event summary -->
-    <section class="projects no-padding-top no-padding-bottom">
-        <div class="container-fluid">
-            <!-- Project-->
-            <div class="project">
-                <div class="row bg-white has-shadow">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="project-title d-flex align-items-center">
-                            <div class="image has-shadow"><img src="https://d19m59y37dris4.cloudfront.net/admin/1-4-5/img/project-1.jpg" alt="..." class="img-fluid"></div>
-                            <div class="text">
-                                <h3 class="h4">Megahalaya Trip</h3><small>Weekend</small>
-                            </div>
-                        </div>
-                        <div class="project-date"><span class="hidden-sm-down">Nov 23 to Nov 28</span></div>
-                    </div>
-                    <div class="right-col col-lg-6 d-flex align-items-center">
-                        <div class="project-date"><span class="hidden-sm-down">Sots Avilable <b>25</b> </span></div>
-                        <div class="project-date"><span class="hidden-sm-down">Sots Booked <b>21</b> </span></div>
-                        @*<div class="time"><i class="fa fa-clock-o"></i>Avilable Slots <b>25</b> </div>*@
-                        <div class="comments"><i class="fa fa-comment-o"></i>20</div>
-                        <div class="project-progress">
-                            <div class="progress">
-                                <div role="progressbar" style="width: 45%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- summary board -->
-    <div class="row">
-        <section id="secSummary" class="dashboard-counts no-padding-bottom">
+        <!-- event summary -->
+        <section class="projects no-padding-top no-padding-bottom">
             <div class="container-fluid">
-                <div class="row bg-white has-shadow">
-                    <!-- Item -->
-                    <div class="col-xl-4 col-sm-6">
-                        <div class="item d-flex align-items-center">
-                            <div class="icon bg-violet"><i class="icon-user"></i></div>
-                            <div class="title">
-                                <span>Total<br>Cost</span>
-                                <div class="progress">
-                                    <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                <!-- Project-->
+                <div class="project">
+                    <div class="row bg-white has-shadow">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="project-title d-flex align-items-center">
+                                <div class="image has-shadow"><img src="https://d19m59y37dris4.cloudfront.net/admin/1-4-5/img/project-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="text">
+                                    <h3 class="h4">Megahalaya Trip</h3><small>Weekend</small>
                                 </div>
                             </div>
-                            <div class="number"><strong>25</strong></div>
+                            <div class="project-date"><span class="hidden-sm-down">Nov 23 to Nov 28</span></div>
                         </div>
-                    </div>
-                    <!-- Item -->
-                    <div class="col-xl-4 col-sm-6">
-                        <div class="item d-flex align-items-center">
-                            <div class="icon bg-red"><i class="icon-padnote"></i></div>
-                            <div class="title">
-                                <span>Online</span>
+                        <div class="right-col col-lg-6 d-flex align-items-center">
+                            <div class="project-date"><span class="hidden-sm-down">Sots Avilable <b>25</b> </span></div>
+                            <div class="project-date"><span class="hidden-sm-down">Sots Booked <b>21</b> </span></div>
+                            @*<div class="time"><i class="fa fa-clock-o"></i>Avilable Slots <b>25</b> </div>*@
+                            <div class="comments"><i class="fa fa-comment-o"></i>20</div>
+                            <div class="project-progress">
                                 <div class="progress">
-                                    <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
+                                    <div role="progressbar" style="width: 45%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
                                 </div>
                             </div>
-                            <div class="number"><strong>70</strong></div>
-                        </div>
-                    </div>
-                    <!-- Item -->
-                    <div class="col-xl-4 col-sm-6">
-                        <div class="item d-flex align-items-center">
-                            <div class="icon bg-green"><i class="icon-bill"></i></div>
-                            <div class="title">
-                                <span>Offline</span>
-                                <div class="progress">
-                                    <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
-                                </div>
-                            </div>
-                            <div class="number"><strong>40</strong></div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
 
-    <!-- select source for estimation-->
-    <div class="row">
-        <div id="divSourceSelection" class="card">
-            <div class="card-close">
-                <div class="dropdown">
-                    <button type="button" id="closeCard3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                    <div aria-labelledby="closeCard3" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+        <!-- summary board -->
+        <div class="row">
+            <section id="secSummary" class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                    <div class="row bg-white has-shadow">
+                        <!-- Item -->
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="item d-flex align-items-center">
+                                <div class="icon bg-violet"><i class="icon-user"></i></div>
+                                <div class="title">
+                                    <span>Total<br>Cost</span>
+                                    <div class="progress">
+                                        <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                                    </div>
+                                </div>
+                                <div class="number"><strong>25</strong></div>
+                            </div>
+                        </div>
+                        <!-- Item -->
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="item d-flex align-items-center">
+                                <div class="icon bg-red"><i class="icon-padnote"></i></div>
+                                <div class="title">
+                                    <span>Online</span>
+                                    <div class="progress">
+                                        <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
+                                    </div>
+                                </div>
+                                <div class="number"><strong>70</strong></div>
+                            </div>
+                        </div>
+                        <!-- Item -->
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="item d-flex align-items-center">
+                                <div class="icon bg-green"><i class="icon-bill"></i></div>
+                                <div class="title">
+                                    <span>Offline</span>
+                                    <div class="progress">
+                                        <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
+                                    </div>
+                                </div>
+                                <div class="number"><strong>40</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- select source for estimation-->
+        <div class="row" id="divSelectSource" v-if="showSelectSource">
+            <div class="card">
+                <div class="card-close">
+                    <div class="dropdown">
+                        <button type="button" id="closeCard3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                        <div aria-labelledby="closeCard3" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                    </div>
+                </div>
+                <div class="card-header d-flex align-items-center">
+                    <h3 class="h4">Select sources</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- stay -->
+                        <div class="form-group col-md-3">
+                            <select name="account" class="form-control" v-on:change="updateReceipt('stay')" v-model="selection.stay">
+                                <option value="0">Select Stay</option>
+                                <option v-for="(item,index) in expenseType.stay" v-bind:value="item.EventExpensesEstimateLookupID">{{ item.ExpenseTypeSource + " (&#8377; " + item.ExpenseAmount + ")" }} </option>
+                            </select>
+                        </div>
+
+                        <!-- transport -->
+                        <div class="form-group col-md-3">
+                            <select name="account" class="form-control" v-on:change="updateReceipt('transport')" v-model="selection.transport">
+                                <option value="0">Select Transport</option>
+                                <option v-for="(item,index) in expenseType.transport" v-bind:value="item.EventExpensesEstimateLookupID">{{ item.slab + " (&#8377; " + item.amount + ")" }} </option>
+                            </select>
+                        </div>
+                        <!-- guide -->
+                        <div class="form-group col-md-3">
+                            <input type="text" disabled="" v-bind:value="expenseType.guide.name +' (&#8377; '+ expenseType.guide.amount +' )'" class="form-control">
+                            <input type="text" style="display:none" v-model="selection.guide" />
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card-header d-flex align-items-center">
-                <h3 class="h4">Select sources</h3>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <!-- stay -->
-                    <div class="form-group col-md-3">
-                        <select name="account" class="form-control" v-on:change="updateReceipt('stay')" v-model="selection.stay">
-                            <option value="0">Select Stay</option>
-                            <option v-for="(item,index) in expenseType.stay" v-bind:value="item.EventExpensesEstimateLookupID">{{ item.ExpenseTypeSource + " (&#8377; " + item.ExpenseAmount + ")" }} </option>
-                        </select>
+            
+            <!-- final cost resipt-->
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h3 class="h4">Cost Receipt </h3>
+                    <h6 style="margin-left:10px"> Total Amount :{{ "&#8377; "+ getTotalReciptAmount()  }} </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Name</th>
+                                    <th>Amount</th>
+                                    <th>Payment Mode</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in receipt">
+                                    <td> {{ item.category }} </td>
+                                    <td> {{ item.source}} </td>
+                                    <td> {{ item.amount }} </td>
+                                    <td> {{ item.paymentMode }} </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                    <!-- transport -->
-                    <div class="form-group col-md-3">
-                        <select name="account" class="form-control" v-on:change="updateReceipt('transport')" v-model="selection.transport">
-                            <option value="0">Select Transport</option>
-                            <option v-for="(item,index) in expenseType.transport" v-bind:value="item.EventExpensesEstimateLookupID">{{ item.slab + " (&#8377; " + item.amount + ")" }} </option>
-                        </select>
-                    </div>
-                    <!-- guide -->
-                    <div class="form-group col-md-3">
-                        <input type="text" disabled="" v-bind:value="expenseType.guide.name +' (&#8377; '+ expenseType.guide.amount +' )'" class="form-control">
-                        <input type="text" style="display:none" v-model="selection.guide" />
+                    <div class="row">
+                        <input type="button" class="btn btn-primary" value="Save this receipt" v-on:click="updateReceipToDB()" />
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
 
+        <!-- transaction-->
+     
+        <div class="row">
 
-    <!-- final cost resipt-->
-    <div class="row">
-        <div class="card">
-            <div class="card-header d-flex align-items-center">
-                <h3 class="h4">Cost Receipt </h3>
-                <h6 style="margin-left:10px"> Total Amount :{{ "&#8377; "+ getTotalReciptAmount()  }} </h6>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>Name</th>
-                                <th>Amount</th>
-                                <th>Payment Mode</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="item in receipt">
-                                <td> {{ item.category }} </td>
-                                <td> {{ item.source}} </td>
-                                <td> {{ item.amount }} </td>
-                                <td> {{ item.paymentMode }} </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h3 class="h4">Transaction History</h3>
                 </div>
-                <div class="row">
-                    <input type="button" class="btn btn-primary" value="Save this receipt" v-on:click="updateReceipToDB()" />
+                <div class="card-body" style="max-height:450px;overflow-y:auto">
+
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label>Amount</label>
+                            <input type="number" placeholder="Amount" class="form-control" v-model="newTransaction.amount">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Date</label>
+                            <input type="date" class="form-control" v-model="newTransaction.date">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label> Recepient </label>
+                            <select class="form-control" v-model="newTransaction.recepient">
+                                <option v-bind:value="'0'">Select Recepient</option>
+                                <option v-for="item in recepientsList" v-bind:value="item.ExpenseRecipientID"> {{ item.RecipientName }} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Transaction ID</label>
+                            <input id="txtTransactionId" type="text" placeholder="transaction id" class="form-control" v-model="newTransaction.transactionId">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Notes</label>
+                            <input type="text" placeholder="additional information" class="form-control" v-model="newTransaction.notes">
+                        </div>
+                        <div class="form-group col-md-3" style="padding-top:25px">
+                            <input type="button" class="btn btn-primary" value="Save" v-on:click="saveTransaction()" />
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Transferred</th>
+                                    <th>Balance</th>
+                                    <th>Recepient</th>
+                                    <th>TransacrionId</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in transactionsHistory">
+                                    <td> {{ item.TransactionDate }} </td>
+                                    <td> {{ item.TransferedAmount }} </td>
+                                    <td> {{ item.BalanceAmount }} </td>
+                                    <td> {{ item.Recepient }} </td>
+                                    <td> {{ item.TransactionID }} </td>
+                                    <td> {{ item.notes }} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
         </div>
-    </div>
 
-</div>
+    </div>
 
 <script type="text/javascript">
 
@@ -194,7 +259,10 @@
         var vueapp = new Vue({
             el: "#maindiv",
             data: {
+                showSelectSource: false,
+                showAddNewTransactionDiv:false,
                 selectedEvent: "",
+                eventDetails:[],
                 eventData: [],
                 selection: {
                     stay: 0,
@@ -206,21 +274,31 @@
                     transport: [],
                     guide: {}
                 },
-                receipt: []
+                receipt: [],
+                recepientsList: [],
+                newTransaction: {
+                    amount: 0,
+                    date: new Date(),
+                    recepient: 0,
+                    transactionId: "",
+                    notes: "",
+                    balanceAmount: 0
+                },
+                transactionsHistory:[]
             },
             mounted: function () {
                 var id = location.search.split("=")[1]; //assuming 1 param only
 
-                fetch("/ManageData/GetEventExpensesLookup?eventDetailId=" + id)
-                    .then(result => result.json())
-                    .then(jsondata => {
-                        debugger;
-                        this.eventData = jsondata.slice();
-                        this.expenseType.stay = getDataByCategory(jsondata, "stay");
-                        this.expenseType.transport = getTrasportData(jsondata);
-                        this.expenseType.guide = getGuideData(jsondata);
-                        this.selection.guide = this.expenseType.guide["EventExpensesEstimateLookupID"]
-                    })
+                //fetch("/ManageData/GetEventExpensesLookup?eventDetailId=" + id)
+                //    .then(result => result.json())
+                //    .then(jsondata => {
+                //        debugger;
+                //        this.eventData = jsondata.slice();
+                //        this.expenseType.stay = getDataByCategory(jsondata, "stay");
+                //        this.expenseType.transport = getTrasportData(jsondata);
+                //        this.expenseType.guide = getGuideData(jsondata);
+                //        this.selection.guide = this.expenseType.guide["EventExpensesEstimateLookupID"]
+                //    })
             },
             methods: {
                 updateReceipt: function () {
