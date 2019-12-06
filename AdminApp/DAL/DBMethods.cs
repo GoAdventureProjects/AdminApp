@@ -85,10 +85,10 @@ namespace AdminApp.DAL
             {
                 throw ex;
             }
-            
+
         }
 
-        public bool UpdateTransport(int eventId,List<TransportSlab> transportSlabs)
+        public bool UpdateTransport(int eventId, List<TransportSlab> transportSlabs)
         {
             try
             {
@@ -112,26 +112,26 @@ namespace AdminApp.DAL
             }
         }
 
-		public bool SaveEventExpenses(int eventDatesId,List<EventExpenseEstimate> eventExpenses)
-		{
-			try
-			{
-				return DAL.UpdateReceipt(eventDatesId,eventExpenses);
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
-
-        public List<EventTransactions> GetEventTransactions(int eventDatesId)
+        public bool SaveEventExpenses(int eventDatesId, List<EventExpenseEstimate> eventExpenses)
         {
             try
             {
-                var dt= DAL.GetEventTransactions(eventDatesId);
+                return DAL.UpdateReceipt(eventDatesId, eventExpenses);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<EventTransaction> GetEventTransactions(int eventDatesId)
+        {
+            try
+            {
+                var dt = DAL.GetEventTransactions(eventDatesId);
                 if (dt != null)
                 {
-                    return Utils.ConvertDataTable<EventTransactions>(dt);
+                    return Utils.ConvertDataTable<EventTransaction>(dt);
                 }
                 return null;
             }
@@ -149,6 +149,35 @@ namespace AdminApp.DAL
                 if (dt != null)
                 {
                     return Utils.ConvertDataTable<Recepient>(dt);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool SaveEventTransaction(EventTransaction transaction)
+        {
+            try
+            {
+                return DAL.SaveEventTransaction(transaction);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<EventEstimateAgg> GetEventEstimationAmount(int eventDatesId)
+        {
+            try
+            {
+                var dt = DAL.GetEventEstimationAmount(eventDatesId);
+                if (dt != null)
+                {
+                    return Utils.ConvertDataTable<EventEstimateAgg>(dt);
                 }
                 return null;
             }

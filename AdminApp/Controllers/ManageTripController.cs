@@ -53,13 +53,32 @@ namespace AdminApp.Controllers
         public string GetEventTransactions(int eventDatesId)
         {
             var result = dbStore.GetEventTransactions(eventDatesId);
-            return (result == null) ? JsonConvert.SerializeObject(result) : "";
+            return (result != null) ? JsonConvert.SerializeObject(result) : "";
         }
 
         public string GetRecepientsList()
         {
             var result = dbStore.GetRecepients();
             return (result == null)  ?"": JsonConvert.SerializeObject(result);
+        }
+
+        public string SaveTransaction(EventTransaction transaction)
+        {
+            try
+            {
+                var result = dbStore.SaveEventTransaction(transaction);
+                return (result) ? "saved successfully" : "something went wrong";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string GetEventEstimation(int eventDatesId)
+        {
+            var result = dbStore.GetEventEstimationAmount(eventDatesId);
+            return (result == null) ? "" : JsonConvert.SerializeObject(result);
         }
     }
 }

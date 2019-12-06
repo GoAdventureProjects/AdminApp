@@ -75,7 +75,7 @@
                                         <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
                                     </div>
                                 </div>
-                                <div class="number"><strong>25</strong></div>
+                                <div class="number"><strong> {{eventEstimation.totalAmount}} </strong></div>
                             </div>
                         </div>
                         <!-- Item -->
@@ -88,7 +88,7 @@
                                         <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
                                     </div>
                                 </div>
-                                <div class="number"><strong>70</strong></div>
+                                <div class="number"><strong>{{eventEstimation.online}}</strong></div>
                             </div>
                         </div>
                         <!-- Item -->
@@ -101,7 +101,7 @@
                                         <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
                                     </div>
                                 </div>
-                                <div class="number"><strong>40</strong></div>
+                                <div class="number"><strong>{{eventEstimation.offline}}</strong></div>
                             </div>
                         </div>
                     </div>
@@ -189,6 +189,11 @@
             <div class="card">
                 <div class="card-header d-flex align-items-center">
                     <h3 class="h4">Transaction History</h3>
+                    <div class="row">
+                        <div class="col-md-3"> Total Amount:100 </div>
+                        <div class="col-md-3"> Transfered:100 </div>
+                        <div class="col-md-3"> Balance:4900 </div>
+                    </div>
                 </div>
                 <div class="card-body" style="max-height:450px;overflow-y:auto">
 
@@ -203,7 +208,7 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label> Recepient </label>
-                            <select class="form-control" v-model="newTransaction.recepient">
+                            <select class="form-control" v-model="newTransaction.recepientId">
                                 <option v-bind:value="'0'">Select Recepient</option>
                                 <option v-for="item in recepientsList" v-bind:value="item.ExpenseRecipientID"> {{ item.RecipientName }} </option>
                             </select>
@@ -227,7 +232,6 @@
                                 <tr>
                                     <th>Date</th>
                                     <th>Transferred</th>
-                                    <th>Balance</th>
                                     <th>Recepient</th>
                                     <th>TransacrionId</th>
                                     <th>Notes</th>
@@ -237,13 +241,13 @@
                                 <tr v-for="item in transactionsHistory">
                                     <td> {{ item.TransactionDate }} </td>
                                     <td> {{ item.TransferedAmount }} </td>
-                                    <td> {{ item.BalanceAmount }} </td>
                                     <td> {{ item.Recepient }} </td>
                                     <td> {{ item.TransactionID }} </td>
                                     <td> {{ item.notes }} </td>
                                 </tr>
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
             </div>
@@ -259,6 +263,7 @@
         var vueapp = new Vue({
             el: "#maindiv",
             data: {
+                eventDatesId:0,
                 showSelectSource: false,
                 showAddNewTransactionDiv:false,
                 selectedEvent: "",
@@ -274,12 +279,17 @@
                     transport: [],
                     guide: {}
                 },
+                eventEstimation: {
+                    totalAmount: 0,
+                    online: 0,
+                    offline:0
+                },
                 receipt: [],
                 recepientsList: [],
                 newTransaction: {
                     amount: 0,
                     date: new Date(),
-                    recepient: 0,
+                    recepientId: 0,
                     transactionId: "",
                     notes: "",
                     balanceAmount: 0
@@ -287,7 +297,9 @@
                 transactionsHistory:[]
             },
             mounted: function () {
-                var id = location.search.split("=")[1]; //assuming 1 param only
+                this.eventDatesId = location.search.split("=")[1]; //assuming 1 param only
+                
+                
 
                 //fetch("/ManageData/GetEventExpensesLookup?eventDetailId=" + id)
                 //    .then(result => result.json())
@@ -299,6 +311,11 @@
                 //        this.expenseType.guide = getGuideData(jsondata);
                 //        this.selection.guide = this.expenseType.guide["EventExpensesEstimateLookupID"]
                 //    })
+
+                //get recepients list
+                this.getRecepientsList();
+                this.getTransactionHistory(this.eventDatesId);
+                this.getEventEstimation(this.eventDatesId);
             },
             methods: {
                 updateReceipt: function () {
@@ -343,6 +360,48 @@
                 },
                 navigateToTransactions: function () {
                     window.location.href = '/ManageTrip/Transactions?Id=' + location.search.split("=")[1];
+                },
+                getRecepientsList: function () {
+                    fetch("GetRecepientsList")
+                        .then(result => result.json())
+                        .then(jsondata => this.recepientsList = jsondata)
+                },
+                getTransactionHistory: function (eventDatesId) {
+                    fetch("GetEventTransactions?eventDatesId=" + eventDatesId)
+                        .then(result => result.json())
+                        .then(jsondata => this.transactionsHistory = jsondata)
+                },
+                getEventEstimation: function (eventDatesId) {
+                    fetch("GetEventEstimation?eventDatesId=" + eventDatesId)
+                        .then(result => result.json())
+                        .then(data => {
+                            debugger;
+                            this.eventEstimation.totalAmount = data.map(x => x["Amount"]).reduce((a, b) => { return a + b }, 0);
+                            this.eventEstimation.online = data.filter(x => x["ModeOfPayment"] == 'online').map(x => x["Amount"]).reduce((a, b) => { return a + b }, 0)
+                            this.eventEstimation.offline = data.filter(x => x["ModeOfPayment"] == 'offline').map(x => x["Amount"]).reduce((a, b) => { return a + b }, 0)
+
+                        })
+                },
+                saveTransaction: function () {
+
+                    var param = {
+                        EventDatesID: this.eventDatesId,
+                        TransferedAmount: this.newTransaction.amount,
+                        TransactionDate: this.newTransaction.date,
+                        TransactionID: this.newTransaction.transactionId,
+                        ExpenseRecipientID: this.newTransaction.recepientId,
+                        notes: this.newTransaction.notes
+                    };
+
+                    fetch("SaveTransaction?eventDatesId=" + this.eventDatesId, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(param)
+                    }).then(response => {
+                            this.getTransactionHistory(); //updates view 
+                        })
                 }
             }
         });

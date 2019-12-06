@@ -271,12 +271,40 @@ namespace App.DAL.StoredProcs
 			}
 		}
 
+        public bool SaveEventTransaction(EventTransaction transaction)
+        {
+            try
+            {
+                var query = "insert into finance.ExpensesTransaction (EventDatesID,TransferedAmount,TransactionDate,TransactionID,ExpenseRecipientID,CreatedBy,CreatedDate,notes) " +
+                    "values (@EventDatesID,@TransferedAmount,@TransactionDate,@TransactionID,@ExpenseRecipientID,@CreatedBy,@CreatedDate,@notes)";
+                var cmd = dbmanager.GetSqlCommand();
+                cmd.CommandText = query;
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@EventDatesID", transaction.EventDatesID);
+                cmd.Parameters.AddWithValue("@TransferedAmount", transaction.TransferedAmount);
+                cmd.Parameters.AddWithValue("@BalanceAmount", transaction.BalanceAmount);
+                cmd.Parameters.AddWithValue("@TransactionDate", transaction.TransactionDate);
+                cmd.Parameters.AddWithValue("@TransactionID", transaction.TransactionID);
+                cmd.Parameters.AddWithValue("@ExpenseRecipientID", transaction.ExpenseRecipientID);
+                cmd.Parameters.AddWithValue("@CreatedBy", "Admin");
+                cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+                cmd.Parameters.AddWithValue("@notes", transaction.notes);
+                var rows = dbmanager.ExecuteNonQuery(cmd);
+                return rows >= 1;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
 
         public DataTable GetEventTransactions(int eventdatesId)
         {
             try
             {
-                var query = $"select *from finance.ExpensesTransaction where EventDatesID={eventdatesId}";
+                var query = $"select expt.*,expr.RecipientName as Recepient from finance.ExpensesTransaction expt left join finance.ExpenseRecipient expr on expt.ExpenseRecipientID = expr.ExpenseRecipientID where EventDatesID = {eventdatesId}";
                 var cmd = dbmanager.GetSqlCommand(query);
                 var dt = dbmanager.GetDataTableResult(cmd);
                 return dt;
@@ -302,6 +330,21 @@ namespace App.DAL.StoredProcs
             }
         }
 
-        #endregion
+        public DataTable GetEventEstimationAmount(int eventDatesId)
+        {
+            try
+            {
+                var query = $"select  lup.ExpenseModeOfPayment as ModeOfPayment, sum(lup.ExpenseAmount) as Amount from finance.EventExpensesEstimateLookup lup join Finance.EventExpensesEstimate est on lup.EventExpensesEstimateLookupID = est.EventExpensesEstimateLookupID where est.IsActive = 1 and est.EventDatesID=@EventDatesID group by lup.ExpenseModeOfPayment";
+                var cmd = dbmanager.GetSqlCommand();
+                cmd.CommandText = query;
+                cmd.Parameters.AddWithValue("@EventDatesID", eventDatesId);
+                var dt = dbmanager.GetDataTableResult(cmd);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -2,12 +2,12 @@
 
 namespace App.Models.Admin
 {
-    public class EventTransactions
+    public class EventTransaction
     {
         public int EventDatesID { get; set; }
-        public decimal EstimatedAmount { get; set; }
-        public decimal TransferedAmount { get; set; }
-        public decimal BalanceAmount { get; set; }
+        public double EstimatedAmount { get; set; }
+        public double TransferedAmount { get; set; }
+        public double BalanceAmount { get; set; }
         public DateTime TransactionDate { get; set; }
         public string TransactionID { get; set; }
         public int ExpenseRecipientID { get; set; }
