@@ -18,6 +18,13 @@
     <div class="row">
 
         <!-- UpComming Events -->
+        <div class="col-md-8">
+            <input type="date" class="form-control" v-model="eventFromdate"/>
+        </div>
+        <div class="col-md-3">
+            <input  type="button" class="btn btn-primary" value="Refresh" v-on:click="getEventDetails()"/>
+        </div>
+
         <div class="card">
             <div class="card-header d-flex align-items-center">
                 <h3 class="h4">UpComming Events</h3>
@@ -68,6 +75,7 @@
         var app = new Vue({
             el: "#maindiv",
             data: {
+                eventFromdate:"",
                 eventDetails: {
                     data: [],
                     displayHeaders: ["EventTitle", "EventType", "City", "FromDate", "ToDate", "AvailableSlots", "BookedSlots","EstimatedAmount"]
@@ -78,10 +86,19 @@
             },
             methods: {
                 getEventDetails: function () {
-                    fetch("/home/GetEventDetails")
+                    var datestr = "";
+                    if (this.eventFromdate)
+                        datestr = this.eventFromdate;
+                    else {
+                        debugger;
+                        var date = new Date();
+                        datestr = moment(String(new Date())).format('YYYY-MM-DD') //date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay();
+                    }
+
+                    // (this.eventFromdate) ? (this.eventFromdate) : moment(String(new Date())).format('MMM Do YYYY hh:mm'))
+                    fetch("/home/GetEventDetails?date=" + datestr )
                         .then(response => response.json())
                         .then(jsondata => {
-                            debugger;
                             this.eventDetails.data = jsondata;
                         });
                 }

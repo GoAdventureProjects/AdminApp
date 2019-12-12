@@ -37,11 +37,11 @@ namespace AdminApp.Controllers
         }
 
         //[Route("eventdetails")]
-        public string GetEventDetails()
+        public string GetEventDetails(string date)
         {
             try
             {
-                var result = dbStore.GetEventsByDate(DateTime.Now);
+                var result = dbStore.GetEventsByDate(date);
                 if (result != null)
                     return JsonConvert.SerializeObject(result);
             }

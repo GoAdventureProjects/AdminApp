@@ -16,7 +16,7 @@
         padding-top: 10px;
     }
 </style>
-
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 @section page_header{
     <div class="container-fluid">
         <h2 class="no-margin-bottom">Trip Estimation</h2>
@@ -39,20 +39,20 @@
                             <div class="project-title d-flex align-items-center">
                                 <div class="image has-shadow"><img src="https://d19m59y37dris4.cloudfront.net/admin/1-4-5/img/project-1.jpg" alt="..." class="img-fluid"></div>
                                 <div class="text">
-                                    <h3 class="h4">Megahalaya Trip</h3><small>Weekend</small>
+                                    <h3 class="h4">{{eventDetails.Title}}</h3><small>{{eventDetails.EventType}}</small>
                                 </div>
                             </div>
-                            <div class="project-date"><span class="hidden-sm-down">Nov 23 to Nov 28</span></div>
+                            <div class="project-date"><span class="hidden-sm-down">{{eventDetails.FromDate}} to {{eventDetails.ToDate}}</span></div>
                         </div>
                         <div class="right-col col-lg-6 d-flex align-items-center">
-                            <div class="project-date"><span class="hidden-sm-down">Sots Avilable <b>25</b> </span></div>
-                            <div class="project-date"><span class="hidden-sm-down">Sots Booked <b>21</b> </span></div>
+                            <div class="project-date"><span class="hidden-sm-down">Sots Avilable <b>{{eventDetails.AvailableSlots}} </b> </span></div>
+                            <div class="project-date"><span class="hidden-sm-down">Sots Booked <b>{{eventDetails.BookedSlots}}</b> </span></div>
                             @*<div class="time"><i class="fa fa-clock-o"></i>Avilable Slots <b>25</b> </div>*@
-                            <div class="comments"><i class="fa fa-comment-o"></i>20</div>
+                            <div class="comments"><i class="fa fa-comment-o"></i>0</div>
                             <div class="project-progress">
-                                <div class="progress">
+                                @*<div class="progress">
                                     <div role="progressbar" style="width: 45%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>
@@ -109,6 +109,14 @@
             </section>
         </div>
 
+        <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+                <button type="button" v-on:click="toggleReceiptDiv()" style="float:right">Show Receipt</button>
+            </div>
+        </div>
+
+
         <!-- select source for estimation-->
         <div class="row" id="divSelectSource" v-if="showSelectSource">
             <div class="card">
@@ -146,7 +154,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- final cost resipt-->
             <div class="card">
                 <div class="card-header d-flex align-items-center">
@@ -182,18 +190,49 @@
         </div>
 
 
+        <!-- saved receipt -->
+        <div class="card" v-if="showSavedReceipt">
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Saved Receipt </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Payment Mode</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in savedReceipt">
+                                <td>
+                                    {{ item.ExpensesType }}
+                                </td>
+                                <td>
+                                    {{ item.ExpenseTypeSource}}
+                                </td>
+                                <td> {{ item.ExpenseAmount }} </td>
+                                <td> {{ item.ExpenseModeOfPayment }} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- transaction-->
-     
+
         <div class="row">
 
             <div class="card">
                 <div class="card-header d-flex align-items-center">
                     <h3 class="h4">Transaction History</h3>
-                    <div class="row">
-                        <div class="col-md-3"> Total Amount:100 </div>
-                        <div class="col-md-3"> Transfered:100 </div>
-                        <div class="col-md-3"> Balance:4900 </div>
-                    </div>
+                    <div class="col-md-3"> Total Amount:{{eventEstimation.totalAmount }} </div>
+                    <div class="col-md-3"> Transfered:{{ eventEstimation.transfered }} </div>
+                    <div class="col-md-3"> Balance: {{ eventEstimation.balance  }}</div>
                 </div>
                 <div class="card-body" style="max-height:450px;overflow-y:auto">
 
@@ -239,7 +278,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="item in transactionsHistory">
-                                    <td> {{ item.TransactionDate }} </td>
+                                    <td> {{ item.TransactionDate | formatDate }} </td>
                                     <td> {{ item.TransferedAmount }} </td>
                                     <td> {{ item.Recepient }} </td>
                                     <td> {{ item.TransactionID }} </td>
@@ -247,7 +286,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        
+
                     </div>
                 </div>
             </div>
@@ -263,16 +302,26 @@
         var vueapp = new Vue({
             el: "#maindiv",
             data: {
-                eventDatesId:0,
+                eventDatesId: 0,
+                showSavedReceipt:true,
                 showSelectSource: false,
-                showAddNewTransactionDiv:false,
+                showAddNewTransactionDiv: false,
                 selectedEvent: "",
-                eventDetails:[],
+                eventDetails: [],
                 eventData: [],
                 selection: {
                     stay: 0,
                     transport: 0,
                     guide: 0
+                },
+                eventDetails: {
+                    Title: "",
+                    EventType: "",
+                    NoOfSlots:0,
+                    BookedSlots:0,
+                    AvailableSlots: 0,
+                    FromDate:"",
+                    ToDate:""
                 },
                 expenseType: {
                     stay: [],
@@ -282,10 +331,13 @@
                 eventEstimation: {
                     totalAmount: 0,
                     online: 0,
-                    offline:0
+                    offline: 0,
+                    transfered: 0,
+                    balance:0
                 },
                 receipt: [],
                 recepientsList: [],
+                savedReceipt:[],
                 newTransaction: {
                     amount: 0,
                     date: new Date(),
@@ -294,39 +346,28 @@
                     notes: "",
                     balanceAmount: 0
                 },
-                transactionsHistory:[]
+                transactionsHistory: []
             },
             mounted: function () {
                 this.eventDatesId = location.search.split("=")[1]; //assuming 1 param only
-                
-                
-
-                //fetch("/ManageData/GetEventExpensesLookup?eventDetailId=" + id)
-                //    .then(result => result.json())
-                //    .then(jsondata => {
-                //        debugger;
-                //        this.eventData = jsondata.slice();
-                //        this.expenseType.stay = getDataByCategory(jsondata, "stay");
-                //        this.expenseType.transport = getTrasportData(jsondata);
-                //        this.expenseType.guide = getGuideData(jsondata);
-                //        this.selection.guide = this.expenseType.guide["EventExpensesEstimateLookupID"]
-                //    })
 
                 //get recepients list
+                this.getEventExpenseLookup();
                 this.getRecepientsList();
-                this.getTransactionHistory(this.eventDatesId);
-                this.getEventEstimation(this.eventDatesId);
+                this.getEventEstimationSummary(this.eventDatesId);
+                this.getEventDetails();
+                this.getEventEstimation();
+                //this.getTransactionHistory(this.eventDatesId);
+                
             },
             methods: {
                 updateReceipt: function () {
-                    debugger;
                     this.receipt = [];
                     this.updateSourceDataInReceipt("stay")
                     this.updateSourceDataInReceipt("transport")
                     this.updateSourceDataInReceipt("guide")
                 },
                 updateSourceDataInReceipt: function (type) {
-                    debugger;
                     var obj = {};
                     if (type == "stay")
                         obj = this.eventData.filter(x => x["EventExpensesEstimateLookupID"] == this.selection.stay)[0];
@@ -366,21 +407,62 @@
                         .then(result => result.json())
                         .then(jsondata => this.recepientsList = jsondata)
                 },
+                getEventExpenseLookup: function () {
+                    fetch("/ManageData/GetEventExpensesLookup?eventDetailId=" + this.eventDatesId)
+                        .then(result => result.json())
+                        .then(jsondata => {
+                            debugger;
+                            this.eventData = jsondata.slice();
+                            this.expenseType.stay = getDataByCategory(jsondata, "stay");
+                            this.expenseType.transport = getTrasportData(jsondata);
+                            this.expenseType.guide = getGuideData(jsondata);
+                            this.selection.guide = this.expenseType.guide["EventExpensesEstimateLookupID"]
+                        })
+                },
+                getEventDetails: function () {
+                    fetch("GetEventDetails?id=" + this.eventDatesId)
+                        .then(result => result.json())
+                        .then(jsondata => {
+                            this.eventDetails = jsondata;
+                        })
+                },
                 getTransactionHistory: function (eventDatesId) {
                     fetch("GetEventTransactions?eventDatesId=" + eventDatesId)
                         .then(result => result.json())
-                        .then(jsondata => this.transactionsHistory = jsondata)
+                        .then(jsondata => {
+                            this.transactionsHistory = jsondata;
+                            let tfamount = this.transactionsHistory.map(x => x['TransferedAmount']).reduce((a, b) => { return a + b }, 0);
+                            this.eventEstimation.transfered = tfamount;
+                            this.eventEstimation.balance = this.eventEstimation.totalAmount - tfamount;
+                        })
                 },
-                getEventEstimation: function (eventDatesId) {
-                    fetch("GetEventEstimation?eventDatesId=" + eventDatesId)
+                getEventEstimationSummary: function (eventDatesId) {
+                    fetch("GetEventEstimationSummary?eventDatesId=" + eventDatesId)
                         .then(result => result.json())
                         .then(data => {
-                            debugger;
                             this.eventEstimation.totalAmount = data.map(x => x["Amount"]).reduce((a, b) => { return a + b }, 0);
                             this.eventEstimation.online = data.filter(x => x["ModeOfPayment"] == 'online').map(x => x["Amount"]).reduce((a, b) => { return a + b }, 0)
                             this.eventEstimation.offline = data.filter(x => x["ModeOfPayment"] == 'offline').map(x => x["Amount"]).reduce((a, b) => { return a + b }, 0)
 
+                            this.getTransactionHistory(this.eventDatesId);
                         })
+                },
+                getEventEstimation: function () {
+                    debugger;
+                    fetch("GetEventEstimation?id=" + this.eventDatesId)
+                        .then(result => result.json())
+                        .then(data => {
+                            debugger;
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i]["ExpensesType"] == "Transport") {
+                                    data[i]["ExpenseTypeSource"] = data[i]["SlabRange"];
+                                }
+                            }
+                            this.savedReceipt = data;    
+                        })
+                },
+                getEventAmount: function () {
+                    debugger
                 },
                 saveTransaction: function () {
 
@@ -399,9 +481,21 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(param)
-                    }).then(response => {
-                            this.getTransactionHistory(); //updates view 
-                        })
+                    }).then(json)
+                        .then(response => {
+                            console.log(response);
+                            this.getTransactionHistory(); //updates view
+                    })
+                },
+                toggleReceiptDiv: function () {
+                    this.showSelectSource = !this.showSelectSource;
+                }
+            },
+            filters: {
+                formatDate: function (value) {
+                    if (value) {
+                        return moment(String(value)).format('MMM Do YYYY')
+                    }
                 }
             }
         });

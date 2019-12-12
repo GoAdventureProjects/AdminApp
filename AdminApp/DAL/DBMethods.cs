@@ -16,9 +16,9 @@ namespace AdminApp.DAL
             DAL = new App.DAL.StoredProcs.Admin();
         }
 
-        public List<EventDetails> GetEventsByDate(DateTime fromDate)
+        public List<EventDetails> GetEventsByDate(string fromDate)
         {
-            var result = DAL.GetEventsByDate(DateTime.Now);
+            var result = DAL.GetEventsByDate(fromDate);
 
             if (result != null)
             {
@@ -170,14 +170,50 @@ namespace AdminApp.DAL
             }
         }
 
-        public List<EventEstimateAgg> GetEventEstimationAmount(int eventDatesId)
+        public List<EventEstimateAgg> GetEventEstimationSummary(int eventDatesId)
         {
             try
             {
-                var dt = DAL.GetEventEstimationAmount(eventDatesId);
+                var dt = DAL.GetEventEstimationSummary(eventDatesId);
                 if (dt != null)
                 {
                     return Utils.ConvertDataTable<EventEstimateAgg>(dt);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public EventDetails GetEventDetails(int eventDatesId)
+        {
+            try
+            {
+                var dt = DAL.GetEventDetails(eventDatesId);
+                if (dt != null)
+                {
+                    var list = Utils.ConvertDataTable<EventDetails>(dt);
+                    return (list != null) ? list[0] : null;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<EventExpenses> GetEventEstimation(int eventDatesId)
+        {
+            try
+            {
+                var dt = DAL.GetEventEstimation(eventDatesId);
+                if (dt != null)
+                {
+                    var list = Utils.ConvertDataTable<EventExpenses>(dt);
+                    return (list != null) ? list : null;
                 }
                 return null;
             }

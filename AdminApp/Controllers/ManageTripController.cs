@@ -75,9 +75,21 @@ namespace AdminApp.Controllers
             }
         }
 
-        public string GetEventEstimation(int eventDatesId)
+        public string GetEventEstimationSummary(int eventDatesId)
         {
-            var result = dbStore.GetEventEstimationAmount(eventDatesId);
+            var result = dbStore.GetEventEstimationSummary(eventDatesId);
+            return (result == null) ? "" : JsonConvert.SerializeObject(result);
+        }
+
+        public string GetEventDetails(int id)
+        {
+            var result = dbStore.GetEventDetails(id);
+            return (result == null) ? "" : JsonConvert.SerializeObject(result);
+        }
+
+        public string GetEventEstimation(int id)
+        {
+            var result = dbStore.GetEventEstimation(id);
             return (result == null) ? "" : JsonConvert.SerializeObject(result);
         }
     }

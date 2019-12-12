@@ -51,14 +51,15 @@ namespace App.DAL.StoredProcs
             }
         }
 
-        public DataTable GetEventsByDate(DateTime fromDate)
+        public DataTable GetEventsByDate(string fromDate)
         {
             try
             {
                 var cmd = dbmanager.GetSqlCommand("GoAdmin_GetEventsByDate");
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                dbmanager.AddParameter(cmd, "@FromDate", SqlDbType.DateTime);
+                cmd.Parameters.AddWithValue("@FromDate", fromDate);
+                //dbmanager.AddParameter(cmd, "@FromDate", SqlDbType.DateTime);
                 var dt = dbmanager.GetDataTableResult(cmd);
                 return dt;
             }
@@ -106,7 +107,7 @@ namespace App.DAL.StoredProcs
         {
             try
             {
-                var query = $"INSERT INTO  finance.EventExpensesEstimateLookup (EventID,ExpensesTypeid,ExpenseTypeSource,ExpenseAmount,Notes) VALUES " +
+                var query = $"INSERT INTO  finance.EventExpensesEstimateLookup (EventID,ExpensesTypeid,ExpenseTypeSource,ExpenseAmount,ExpenseModeOfPayment,Notes) VALUES " +
                     $"(@EventId,@ExpenseTypeId,@StayName,@Amount,@paymentMode,@Notes)";
 
                 var cmd = dbmanager.GetSqlCommand(query);
@@ -285,10 +286,13 @@ namespace App.DAL.StoredProcs
                 cmd.Parameters.AddWithValue("@BalanceAmount", transaction.BalanceAmount);
                 cmd.Parameters.AddWithValue("@TransactionDate", transaction.TransactionDate);
                 cmd.Parameters.AddWithValue("@TransactionID", transaction.TransactionID);
-                cmd.Parameters.AddWithValue("@ExpenseRecipientID", transaction.ExpenseRecipientID);
+                if (transaction.ExpenseRecipientID == 0)
+                    cmd.Parameters.AddWithValue("@ExpenseRecipientID", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@ExpenseRecipientID", transaction.ExpenseRecipientID);
                 cmd.Parameters.AddWithValue("@CreatedBy", "Admin");
                 cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
-                cmd.Parameters.AddWithValue("@notes", transaction.notes);
+                cmd.Parameters.AddWithValue("@notes", (transaction.notes)??"");
                 var rows = dbmanager.ExecuteNonQuery(cmd);
                 return rows >= 1;
             }
@@ -330,7 +334,7 @@ namespace App.DAL.StoredProcs
             }
         }
 
-        public DataTable GetEventEstimationAmount(int eventDatesId)
+        public DataTable GetEventEstimationSummary(int eventDatesId)
         {
             try
             {
@@ -338,6 +342,38 @@ namespace App.DAL.StoredProcs
                 var cmd = dbmanager.GetSqlCommand();
                 cmd.CommandText = query;
                 cmd.Parameters.AddWithValue("@EventDatesID", eventDatesId);
+                var dt = dbmanager.GetDataTableResult(cmd);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataTable GetEventDetails(int eventDatesId)
+        {
+            try
+            {
+                var query = $"select dat.Id,dat.FromDate,dat.ToDate,dat.AvailableSlots,dat.BookedSlots,detail.Title,detail.EventType,detail.City,detail.NoOfSlots from EventDates dat join EventDetails detail on dat.id = detail.id where dat.id = {eventDatesId}";
+                var cmd = dbmanager.GetSqlCommand();
+                cmd.CommandText = query;
+                var dt = dbmanager.GetDataTableResult(cmd);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public DataTable GetEventEstimation(int eventDatesId)
+        {
+            try
+            {
+                var query = $"SELECT estlkp.ExpenseTypeSource,estlkp.SlabRange,estlkp.ExpenseAmount,estlkp.ExpenseModeOfPayment,estlkp.Notes,eexpt.ExpensesType,eexpt.ExpenseTypeCode FROM finance.EventExpensesEstimate eest JOIN finance.EventExpensesEstimateLookup estlkp on eest.EventExpensesEstimateLookupID = estlkp.EventExpensesEstimateLookupID JOIN finance.EventExpensesType eexpt on estlkp.ExpensesTypeid = eexpt.ExpensesTypeid WHERE EventDatesID = {eventDatesId} AND IsActive = 1";
+                var cmd = dbmanager.GetSqlCommand();
+                cmd.CommandText = query;
                 var dt = dbmanager.GetDataTableResult(cmd);
                 return dt;
             }

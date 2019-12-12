@@ -79,6 +79,10 @@
                         <input id="txtStayNotes" type="text" placeholder="additional information" class="form-control" v-model="crud.stay.notes">
                     </div>
                     <div class="form-group col-md-3">
+                        <input type="radio" name="paymentmode" value="online" checked="checked" v-model="crud.stay.paymentMode">Online
+                        <input type="radio" name="paymentmode" value="offline"  v-model="crud.stay.paymentMode">Offline
+                    </div>
+                    <div class="form-group col-md-3">
                         <input type="button" class="btn btn-primary" value="Save" v-on:click="crudMethods().createStay()" />
                     </div>
                 </div>
@@ -194,7 +198,8 @@
                     stay: {
                         name: "",
                         amount: null,
-                        notes: ""
+                        notes: "",
+                        paymentMode:"online"
                     }
                 }
             },
@@ -239,7 +244,7 @@
                                 expenseTypeId: getExpenseTypeId("stay"),
                                 name: self.crud.stay.name,
                                 amount: self.crud.stay.amount,
-                                paymentMode: 'online',
+                                paymentMode: self.crud.stay.paymentMode,
                                 notes: self.crud.stay.notes
                             };
 
