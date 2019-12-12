@@ -158,11 +158,9 @@
                 this.eventDatesId = id;
                 //fetch("GetEventTransactions?eventDatesId=" + id)
                 //    .then(result => {
-                //        debugger;
                 //        return result.json();
                 //    })
                 //    .then(jsondata => {
-                //        debugger;
                 //        this.transactionsHistory = jsondata;
                 //    })
 
@@ -178,7 +176,6 @@
                         .then(jsondata => this.recepientsList = jsondata)
                 },
                 saveTransaction: function () {
-                    debugger;
                     console.log(this.newTransaction);
 
                     var param = {

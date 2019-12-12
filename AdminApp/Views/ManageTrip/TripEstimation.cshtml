@@ -15,6 +15,12 @@
         margin-bottom: 20px;
         padding-top: 10px;
     }
+
+    .popins-font {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.1em;
+        font-weight: 300;
+    }
 </style>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 @section page_header{
@@ -112,7 +118,7 @@
         <div class="row">
             <div class="col-md-10"></div>
             <div class="col-md-2">
-                <button type="button" v-on:click="toggleReceiptDiv()" style="float:right">Show Receipt</button>
+                <button type="button" class="btn btn-danger" v-on:click="toggleReceiptDiv()" style="float:right">Update Receipt</button>
             </div>
         </div>
 
@@ -229,10 +235,10 @@
 
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h3 class="h4">Transaction History</h3>
-                    <div class="col-md-3"> Total Amount:{{eventEstimation.totalAmount }} </div>
-                    <div class="col-md-3"> Transfered:{{ eventEstimation.transfered }} </div>
-                    <div class="col-md-3"> Balance: {{ eventEstimation.balance  }}</div>
+                    <h3 class="h4" style="padding-right:5px; border-right:solid 2px gray">Transaction History</h3>
+                    <div class="col-md-3 popins-font"> Total Amount:<span style="color:#ff7676"> {{eventEstimation.totalAmount }}</span> </div>
+                    <div class="col-md-3 popins-font"> Transfered: <span style="color:#129c57">{{ eventEstimation.transfered }}</span> </div>
+                    <div class="col-md-3 popins-font"> Balance:  <span style="color:#b78222"> {{ eventEstimation.balance  }}</span></div>
                 </div>
                 <div class="card-body" style="max-height:450px;overflow-y:auto">
 
@@ -279,7 +285,7 @@
                             <tbody>
                                 <tr v-for="item in transactionsHistory">
                                     <td> {{ item.TransactionDate | formatDate }} </td>
-                                    <td> {{ item.TransferedAmount }} </td>
+                                    <td style="color:#129c57"> {{ item.TransferedAmount }} </td>
                                     <td> {{ item.Recepient }} </td>
                                     <td> {{ item.TransactionID }} </td>
                                     <td> {{ item.notes }} </td>
@@ -397,7 +403,8 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(this.receipt)
-                    })
+                    }).then(data => alert("Request Success:"))
+                        .catch(response => alert("Request Failed"));
                 },
                 navigateToTransactions: function () {
                     window.location.href = '/ManageTrip/Transactions?Id=' + location.search.split("=")[1];
@@ -411,7 +418,6 @@
                     fetch("/ManageData/GetEventExpensesLookup?eventDetailId=" + this.eventDatesId)
                         .then(result => result.json())
                         .then(jsondata => {
-                            debugger;
                             this.eventData = jsondata.slice();
                             this.expenseType.stay = getDataByCategory(jsondata, "stay");
                             this.expenseType.transport = getTrasportData(jsondata);
@@ -426,8 +432,8 @@
                             this.eventDetails = jsondata;
                         })
                 },
-                getTransactionHistory: function (eventDatesId) {
-                    fetch("GetEventTransactions?eventDatesId=" + eventDatesId)
+                getTransactionHistory: function () {
+                    fetch("GetEventTransactions?eventDatesId=" + this.eventDatesId)
                         .then(result => result.json())
                         .then(jsondata => {
                             this.transactionsHistory = jsondata;
@@ -448,11 +454,9 @@
                         })
                 },
                 getEventEstimation: function () {
-                    debugger;
                     fetch("GetEventEstimation?id=" + this.eventDatesId)
                         .then(result => result.json())
                         .then(data => {
-                            debugger;
                             for (var i = 0; i < data.length; i++) {
                                 if (data[i]["ExpensesType"] == "Transport") {
                                     data[i]["ExpenseTypeSource"] = data[i]["SlabRange"];
@@ -462,7 +466,6 @@
                         })
                 },
                 getEventAmount: function () {
-                    debugger
                 },
                 saveTransaction: function () {
 
@@ -481,11 +484,11 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(param)
-                    }).then(json)
-                        .then(response => {
-                            console.log(response);
-                            this.getTransactionHistory(); //updates view
-                    })
+                    }).then(data => {
+                        alert("Request Success:");
+                        this.getTransactionHistory(); //updates view
+                    }).catch(response => alert("Request Failed"));
+
                 },
                 toggleReceiptDiv: function () {
                     this.showSelectSource = !this.showSelectSource;

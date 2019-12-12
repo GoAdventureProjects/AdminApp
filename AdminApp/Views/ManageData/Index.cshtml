@@ -255,15 +255,17 @@
                                 },
                                 body: JSON.stringify(param)
                             })
-                                .then(response => response.json())
-                                .then(jsonresponse => {
-                                    alert(jsonresponse);
+                                .then(response => {
+                                    alert("Request success:");
 
                                     self.crud.stay.name = "";
                                     self.crud.stay.amount = null;
                                     self.crud.stay.notes = "";
                                     //refresh data
                                     self.onEventChange();
+                                })
+                                .catch(textresponse => {
+                                    alert("Request failure:");
                                 });
                         },
                         updateTransport: function () {
@@ -274,8 +276,8 @@
                                 },
                                 body: JSON.stringify(self.expenseType.transport)
                             })
-                                .then(response => response.text())
-                                .then(body => alert(body));
+                                .then(response => alert("Request success:"))
+                                .catch(body => alert("Request failure:"));
                         },
                         updateGude: function () {
                             fetch("/ManageData/UpdateGuide?EventId=" + self.selectedEvent, {
@@ -285,8 +287,8 @@
                                 },
                                 body: JSON.stringify(self.expenseType.guide)
                             })
-                                .then(response => response.text())
-                                .then(body => alert(body));
+                                .then(response => alert("Request success:"))
+                                .catch(body => alert("Request failure:"));
                         }
                     }
                 }
