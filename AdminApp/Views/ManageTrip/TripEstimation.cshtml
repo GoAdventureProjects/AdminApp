@@ -81,7 +81,7 @@
                                         <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
                                     </div>
                                 </div>
-                                <div class="number"><strong> {{eventEstimation.totalAmount}} </strong></div>
+                                <div class="number"><strong> {{ (eventDetails.BookedSlots)? eventDetails.BookedSlots*eventEstimation.totalAmount:eventEstimation.totalAmount}} </strong></div>
                             </div>
                         </div>
                         <!-- Item -->
@@ -394,6 +394,7 @@
 
                 },
                 getTotalReciptAmount: function () {
+                    debugger;
                     return this.receipt.reduce((acc, a) => { return acc + a.amount }, 0);
                 },
                 updateReceipToDB: function () {
